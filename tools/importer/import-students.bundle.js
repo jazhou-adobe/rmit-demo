@@ -172,6 +172,14 @@ var CustomImportScript = (() => {
       WebImporter.DOMUtils.remove(element, [
         "div.top-nav",
         // desktop + mobile nav, search, skip link, logo
+        "section.top-nav__accordion",
+        // mobile nav accordion (sibling of div.top-nav)
+        "div.mobinav__display",
+        // hidden mobile-nav accordion embedded in pageheader
+        "div.mobinav__wrapper",
+        // any other mobile-nav wrapper instances
+        "div.primarynav",
+        // primary mega-nav dropdown link lists (outside top-nav)
         "div.footer.rmit-bs",
         // global site footer
         "iframe"
