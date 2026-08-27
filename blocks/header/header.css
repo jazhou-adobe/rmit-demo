@@ -1,9 +1,12 @@
-/* header and nav layout */
+/* RMIT header — navy global bar (logo + RMIT-wide links + search) over a
+   white local student-nav bar. Extracted from https://www.rmit.edu.au/students
+   (global bar background rgb(7,7,88) = RMIT navy). */
+
 header .nav-wrapper {
-  background-color: var(--background-color);
+  background-color: var(--rmit-navy);
   width: 100%;
   z-index: 2;
-  position: fixed;
+  position: relative;
 }
 
 header nav {
@@ -11,38 +14,14 @@ header nav {
   display: grid;
   grid-template:
     'hamburger brand tools' var(--nav-height)
-    'sections sections sections' 1fr / auto 1fr auto;
+    'sections sections sections' auto / auto 1fr auto;
   align-items: center;
-  gap: 0 24px;
+  gap: 0 16px;
   margin: auto;
-  max-width: 1248px;
-  height: var(--nav-height);
+  max-width: 1264px;
   padding: 0 24px;
   font-family: var(--body-font-family);
-}
-
-header nav[aria-expanded='true'] {
-  grid-template:
-    'hamburger brand' var(--nav-height)
-    'sections sections' 1fr
-    'tools tools' var(--nav-height) / auto 1fr;
-  overflow-y: auto;
-  min-height: 100dvh;
-}
-
-@media (width >= 900px) {
-  header nav {
-    display: flex;
-    justify-content: space-between;
-    gap: 0 32px;
-    max-width: 1264px;
-    padding: 0 32px;
-  }
-
-  header nav[aria-expanded='true'] {
-    min-height: 0;
-    overflow: visible;
-  }
+  color: #fff;
 }
 
 header nav p {
@@ -52,9 +31,14 @@ header nav p {
 
 header nav a:any-link {
   color: currentcolor;
+  text-decoration: none;
 }
 
-/* hamburger */
+header nav a:hover {
+  text-decoration: underline;
+}
+
+/* hamburger (mobile) */
 header nav .nav-hamburger {
   grid-area: hamburger;
   height: 22px;
@@ -68,11 +52,9 @@ header nav .nav-hamburger button {
   border: 0;
   border-radius: 0;
   padding: 0;
-  background-color: var(--background-color);
-  color: inherit;
+  background-color: transparent;
+  color: #fff;
   overflow: initial;
-  text-overflow: initial;
-  white-space: initial;
 }
 
 header nav .nav-hamburger-icon,
@@ -135,21 +117,23 @@ header nav[aria-expanded='true'] .nav-hamburger-icon::after {
   }
 }
 
-/* brand */
+/* brand / logo */
 header .nav-brand {
   grid-area: brand;
-  flex-basis: 128px;
-  font-size: var(--heading-font-size-s);
-  font-weight: 700;
-  line-height: 1;
+  display: flex;
+  align-items: center;
+}
+
+header nav .nav-brand p {
+  line-height: 0;
 }
 
 header nav .nav-brand img {
-  width: 128px;
+  width: 130px;
   height: auto;
 }
 
-/* sections */
+/* sections — holds two uls: [0] RMIT-wide bar, [1] local student nav */
 header nav .nav-sections {
   grid-area: sections;
   flex: 1 1 auto;
@@ -160,163 +144,118 @@ header nav .nav-sections {
 header nav[aria-expanded='true'] .nav-sections {
   display: block;
   visibility: visible;
-  align-self: start;
 }
 
 header nav .nav-sections ul {
   list-style: none;
+  margin: 0;
   padding-left: 0;
+}
+
+header nav .nav-sections .default-content-wrapper > ul {
+  padding: 8px 0;
+}
+
+header nav .nav-sections .default-content-wrapper > ul > li {
+  padding: 8px 0;
   font-size: var(--body-font-size-s);
 }
 
-header nav .nav-sections ul > li {
-  font-weight: 500;
-}
-
-header nav .nav-sections ul > li > ul {
-  margin-top: 0;
-}
-
-header nav .nav-sections ul > li > ul > li {
-  font-weight: 400;
+/* mobile: local nav (2nd ul) slightly separated */
+header nav .nav-sections .default-content-wrapper > ul + ul {
+  border-top: 1px solid rgb(255 255 255 / 20%);
+  margin-top: 8px;
+  padding-top: 8px;
 }
 
 @media (width >= 900px) {
+  header .nav-wrapper {
+    background-color: var(--rmit-navy);
+  }
+
+  header nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0;
+    padding: 0;
+    max-width: none;
+  }
+
+  /* Row 1: navy global bar — brand + RMIT-wide links + search */
+  header nav .nav-brand {
+    order: 1;
+    padding: 12px 32px;
+  }
+
+  header nav .nav-tools {
+    order: 2;
+    padding: 12px 32px;
+  }
+
   header nav .nav-sections {
-    display: block;
+    display: contents;
     visibility: visible;
-    white-space: nowrap;
   }
 
-  header nav[aria-expanded='true'] .nav-sections {
-    align-self: unset;
+  header nav .nav-sections .default-content-wrapper {
+    display: contents;
   }
 
-  header nav .nav-sections .nav-drop {
-    position: relative;
-    padding-right: 16px;
-    cursor: pointer;
-  }
-
-  header nav .nav-sections .nav-drop::after {
-    content: '';
-    display: inline-block;
-    position: absolute;
-    top: 2px;
-    right: 2px;
-    transform: rotate(135deg);
-    width: 6px;
-    height: 6px;
-    border: 2px solid currentcolor;
-    border-radius: 0 1px 0 0;
-    border-width: 2px 2px 0 0;
-  }
-
-  header nav .nav-sections .nav-drop[aria-expanded='true']::after {
-    top: unset;
-    bottom: 2px;
-    transform: rotate(315deg);
-  }
-
-  header nav .nav-sections ul {
+  /* RMIT-wide bar (first ul) — small links, right of logo on the navy row */
+  header nav .nav-sections .default-content-wrapper > ul:first-child {
+    order: 1;
     display: flex;
     gap: 24px;
+    margin-left: auto;
+    padding: 0 8px;
+    align-items: center;
+  }
+
+  header nav .nav-sections .default-content-wrapper > ul:first-child > li {
+    padding: 0;
+    font-size: var(--body-font-size-xs);
+  }
+
+  /* Local student nav (second ul) — full-width white bar below */
+  header nav .nav-sections .default-content-wrapper > ul:last-child {
+    order: 3;
+    flex-basis: 100%;
+    display: flex;
+    gap: 32px;
     margin: 0;
+    padding: 0 32px;
+    background-color: #fff;
+    border-top: 3px solid var(--rmit-red);
   }
 
-  header nav .nav-sections .default-content-wrapper > ul > li {
-    flex: 0 1 auto;
-    position: relative;
+  header nav .nav-sections .default-content-wrapper > ul:last-child > li {
+    padding: 16px 0;
+    font-size: var(--body-font-size-s);
+    font-weight: 500;
   }
 
-  header nav .nav-sections .default-content-wrapper > ul > li > ul {
-    display: none;
-    position: relative;
+  header nav .nav-sections .default-content-wrapper > ul:last-child > li a {
+    color: var(--rmit-navy);
   }
 
-  header nav .nav-sections .default-content-wrapper > ul > li[aria-expanded='true'] > ul {
-    display: block;
-    position: absolute;
-    left: -24px;
-    width: 200px;
-    top: 150%;
-    padding: 16px;
-    background-color: var(--light-color);
-    white-space: initial;
-    z-index: 1;
-  }
-
-  header nav .nav-sections .default-content-wrapper > ul > li > ul::before {
-    content: '';
-    position: absolute;
-    top: -8px;
-    left: 16px;
-    width: 0;
-    height: 0;
-    border-left: 8px solid transparent;
-    border-right: 8px solid transparent;
-    border-bottom: 8px solid var(--light-color);
-  }
-
-  header nav .nav-sections .default-content-wrapper > ul > li > ul > li {
-    padding: 8px 0;
+  header nav .nav-sections .default-content-wrapper > ul:last-child > li a:hover {
+    color: var(--rmit-red);
   }
 }
 
-/* tools */
+/* tools — search */
 header nav .nav-tools {
   grid-area: tools;
 }
 
-header nav .nav-tools .button {
-  margin: 0;
-  border: none;
-  padding: 0.5em;
-  background: none;
-  line-height: 0;
+header nav .nav-tools a {
+  color: #fff;
+  font-size: var(--body-font-size-xs);
 }
 
-/* breadcrumbs */
+/* breadcrumbs (unused for now) */
 header .breadcrumbs {
   display: none;
-  margin: auto;
-  max-width: 1248px;
-  height: var(--breadcrumbs-height);
-  padding: 0 24px;
-  font-size: var(--body-font-size-xs);
-  overflow: hidden;
-}
-
-header .breadcrumbs ol {
-  display: flex;
-  flex-flow: wrap;
-  list-style: none;
-  padding: 0;
-  margin-top: 0;
-  margin-bottom: 0;
-  gap: 1ch;
-}
-
-/* stylelint-disable-next-line no-descending-specificity */
-header .breadcrumbs ol li {
-  padding: 0;
-  color: var(--dark-color);
-}
-
-header .breadcrumbs ol li:not(:last-child)::after {
-  content: '/';
-  padding-left: 1ch;
-}
-
-/* stylelint-disable-next-line no-descending-specificity */
-header .breadcrumbs ol li[aria-current] {
-  color: var(--text-color);
-}
-
-@media (width >= 900px) {
-  header .breadcrumbs {
-    display: block;
-    max-width: 1264px;
-    padding: 0 32px;
-  }
 }
