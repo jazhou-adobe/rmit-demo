@@ -1,0 +1,87 @@
+/* cards-links — "Student essentials" quick-links grid.
+   Design migrated from https://www.rmit.edu.au/students (div.iconlistsvg.bg-white).
+   Source: white drop-shadow card containing a multi-column grid of items,
+   each = small SVG icon + linked label. Values from source computed styles. */
+
+/* White drop-shadow card (source .iconlistsvg__wrapper) */
+.cards-links {
+  background-color: #fff;
+  box-shadow: rgb(0 0 0 / 8%) 0 4px 32px 0;
+  padding: 32px 24px 40px;
+}
+
+/* Grid of items (source .iconlistsvg__content--row: flex-wrap, 3 columns) */
+.cards-links > ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0 24px;
+}
+
+/* Each item (source .iconlistsvg__section): icon + label, row layout */
+.cards-links > ul > li {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 16px 0 0;
+}
+
+/* Icon cell (source .iconlistsvg__section--svg, 32px). Reserve width only
+   when an icon image is actually present; collapse when empty. */
+.cards-links .cards-links-card-icon {
+  flex: 0 0 auto;
+  width: 32px;
+  line-height: 0;
+}
+
+.cards-links .cards-links-card-icon:not(:has(img, picture)) {
+  display: none;
+}
+
+.cards-links .cards-links-card-icon img,
+.cards-links .cards-links-card-icon picture {
+  display: block;
+  width: 32px;
+  height: 32px;
+}
+
+/* Text cell (source .iconlistsvg__section--text) */
+.cards-links .cards-links-card-body {
+  flex: 1 1 auto;
+  margin: 0;
+}
+
+.cards-links .cards-links-card-body p {
+  margin: 0;
+}
+
+/* Linked label (source .iconlistsvg__section--text a: #333, 20px, 400) */
+.cards-links .cards-links-card-body a:any-link {
+  color: rgb(51 51 51);
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 32px;
+  text-decoration: none;
+}
+
+.cards-links .cards-links-card-body a:hover {
+  color: var(--link-hover-color); /* RMIT red */
+  text-decoration: underline;
+}
+
+@media (width >= 900px) {
+  .cards-links {
+    padding: 44px 32px 64px;
+  }
+
+  .cards-links > ul {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .cards-links > ul > li {
+    padding: 20px 16px 0;
+  }
+}

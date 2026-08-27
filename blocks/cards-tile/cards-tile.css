@@ -1,0 +1,119 @@
+/* cards-tile — RMIT image-topped card grid
+   Design extracted from https://www.rmit.edu.au/students
+   (.generic-gridlist / .events-gridlist / .grid-list card rows).
+   Used for: Explore resources, Events, Student news, and promo tiles.
+   All render as a responsive row of image-topped cards:
+   [top image] + [navy heading] + [body paragraphs] + optional link. */
+
+.cards-tile > ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 32px 24px;
+}
+
+/* 2-up on small screens.
+   minmax(0, 1fr) keeps tracks equal — a plain 1fr has an `auto`
+   minimum that long headings (or unloaded images) can blow out. */
+@media (width >= 600px) {
+  .cards-tile > ul {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* 4-up on desktop (source: col-md-3) */
+@media (width >= 900px) {
+  .cards-tile > ul {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+/* Card: transparent, borderless, stacked (source cards have no bg/border) */
+.cards-tile > ul > li {
+  display: flex;
+  flex-direction: column;
+  min-width: 0; /* allow grid track to shrink; prevents long headings from stretching a column */
+  margin: 0;
+  padding: 0;
+  background-color: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+/* Top image — full width, ~3:2 crop (source: 268x181 explore, 267x160 events) */
+.cards-tile .cards-tile-card-image {
+  line-height: 0;
+}
+
+.cards-tile .cards-tile-card-image p {
+  margin: 0;
+}
+
+.cards-tile > ul > li img {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+}
+
+/* Body */
+.cards-tile .cards-tile-card-body {
+  margin: 16px 0 0;
+}
+
+/* Body text — source description: 14px / 20px line-height, dark grey (#333) */
+.cards-tile .cards-tile-card-body p {
+  font-family: var(--body-font-family);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  color: #333;
+}
+
+.cards-tile .cards-tile-card-body > p {
+  margin: 0 0 8px;
+}
+
+.cards-tile .cards-tile-card-body > p:last-child {
+  margin-bottom: 0;
+}
+
+/* Card heading — the title link is auto-decorated by EDS as a p.button-container > a.button.
+   Reset the red-pill button styling back to a navy heading link
+   (source h3/h4: Inter/Museo500, 20px, weight 500, line-height 24px, navy). */
+.cards-tile .cards-tile-card-body p.button-container {
+  margin: 0 0 8px;
+}
+
+.cards-tile .cards-tile-card-body a.button:any-link {
+  display: inline;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background-color: transparent;
+  color: var(--rmit-navy);
+  font-family: var(--heading-font-family);
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 24px;
+  text-align: left;
+  text-overflow: clip;
+  white-space: normal;
+  overflow: visible;
+  overflow-wrap: break-word;
+}
+
+.cards-tile .cards-tile-card-body a.button:hover,
+.cards-tile .cards-tile-card-body a.button:focus {
+  background-color: transparent;
+  border: 0;
+  color: var(--rmit-red);
+  text-decoration: underline;
+}

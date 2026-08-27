@@ -1,0 +1,17 @@
+{
+  "status": "success",
+  "url": "https://www.rmit.edu.au/students",
+  "path": "students",
+  "timestamp": "2026-08-27T07:25:40.953Z",
+  "title": "Current students - RMIT University",
+  "template": "students",
+  "blocks": [
+    "hero-overlay",
+    "cards-links",
+    "columns-feature",
+    "cards-tile",
+    "cards-tile",
+    "cards-tile",
+    "cards-tile"
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "variantName": "cards-tile",
+  "baseBlock": "cards",
+  "version": "1.0.0",
+  "created": "2026-08-27T00:00:00.000Z",
+  "sourceContext": {
+    "originUrl": "https://www.rmit.edu.au/students",
+    "originPage": "Current students landing page",
+    "blockPosition": "middle"
+  },
+  "visualCharacteristics": {
+    "colorScheme": "light",
+    "density": "spacious",
+    "purpose": "feature",
+    "imagePattern": "large"
+  },
+  "contentPattern": {
+    "structure": "grid of image-topped cards with heading and descriptive text",
+    "buttonCount": 0,
+    "imageCount": 4
+  },
+  "reuseGuidance": {
+    "suitableFor": [
+      "resource / news / event card grids with a top image, heading and body text",
+      "promo tiles with an optional call-to-action link"
+    ],
+    "notSuitableFor": [
+      "icon + short label quick-link grids (use cards-links)",
+      "two-panel side-by-side feature layouts (use columns-feature)"
+    ]
+  },
+  "usage": {
+    "pagesUsing": ["/students"],
+    "reuseCount": 1,
+    "lastUsed": "2026-08-27T00:00:00.000Z"
+  }
+}

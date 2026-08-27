@@ -1,0 +1,37 @@
+{
+  "variantName": "hero-overlay",
+  "baseBlock": "hero",
+  "version": "1.0.0",
+  "created": "2026-08-27T00:00:00.000Z",
+  "sourceContext": {
+    "originUrl": "https://www.rmit.edu.au/students",
+    "originPage": "Current students landing page",
+    "blockPosition": "top"
+  },
+  "visualCharacteristics": {
+    "colorScheme": "dark",
+    "density": "spacious",
+    "purpose": "hero",
+    "imagePattern": "large"
+  },
+  "contentPattern": {
+    "structure": "background image + heading + intro paragraph",
+    "buttonCount": 0,
+    "imageCount": 1
+  },
+  "reuseGuidance": {
+    "suitableFor": [
+      "landing page intros with a full-width background photo",
+      "section/campaign hero banners with overlay text"
+    ],
+    "notSuitableFor": [
+      "text-only hero without a background image",
+      "product hero requiring inline CTAs beside image"
+    ]
+  },
+  "usage": {
+    "pagesUsing": ["/students"],
+    "reuseCount": 1,
+    "lastUsed": "2026-08-27T00:00:00.000Z"
+  }
+}
