@@ -96,33 +96,51 @@ var CustomImportScript = (() => {
   }
 
   // tools/importer/parsers/columns-feature.js
+  function buildColumn(scope, document2) {
+    const wrapper = scope.querySelector(".columnlinklist-wrapper") || scope;
+    const cellContent = [];
+    const image = wrapper.querySelector(".columnlinklist-image img, img");
+    const heading = wrapper.querySelector(".columnlinklist-body h4, h4, h3, h2");
+    if (image) cellContent.push(image);
+    if (heading) cellContent.push(heading);
+    const links = Array.from(wrapper.querySelectorAll("ul.columnlinklist-links > li > a, .columnlinklist-links li a"));
+    if (links.length) {
+      const ul = document2.createElement("ul");
+      links.forEach((a) => {
+        a.querySelectorAll("svg, .columnlinklist-chevron, span").forEach((s) => s.remove());
+        const li = document2.createElement("li");
+        const link = document2.createElement("a");
+        link.setAttribute("href", a.getAttribute("href") || "");
+        link.textContent = a.textContent.replace(/\s+/g, " ").trim();
+        li.appendChild(link);
+        ul.appendChild(li);
+      });
+      cellContent.push(ul);
+    }
+    return cellContent;
+  }
   function parse3(element, { document: document2 }) {
-    const slides = Array.from(element.querySelectorAll(".columnfeature-card, .swiper-slide.columnfeature-card"));
-    if (slides.length === 0) {
+    const columns = [element];
+    let sib = element.nextElementSibling;
+    while (sib && sib.classList && sib.classList.contains("columnlinklist")) {
+      columns.push(sib);
+      sib = sib.nextElementSibling;
+    }
+    const row = columns.map((col) => buildColumn(col, document2));
+    if (row.every((c) => c.length === 0)) {
       element.replaceWith(...element.childNodes);
       return;
     }
-    const row = slides.map((slide) => {
-      const cellContent = [];
-      const image = slide.querySelector(".card-img img.columnfeature-img, .card-img > div > img, img.card-img-top");
-      const heading = slide.querySelector(".colfeature-content h4, h4, h3, h2");
-      const description = slide.querySelector(".columnfeature-card-desc, .colfeature-content .mt-0");
-      const cta = slide.querySelector(".columnfeature-footer a, .columnfeature-card-footer a, a");
-      if (image) cellContent.push(image);
-      if (heading) cellContent.push(heading);
-      if (description) cellContent.push(description);
-      if (cta) cellContent.push(cta);
-      return cellContent;
-    });
     const cells = [row];
     const block = WebImporter.Blocks.createBlock(document2, { name: "columns-feature", cells });
+    columns.slice(1).forEach((col) => col.remove());
     element.replaceWith(block);
   }
 
   // tools/importer/parsers/cards-tile.js
   function parse4(element, { document: document2 }) {
     const items = Array.from(
-      element.querySelectorAll(".cmp-list__item, .events-gridcmp__item")
+      element.querySelectorAll(".cmp-list__item, .events-gridcmp__item, .columnfeature-card")
     );
     if (items.length === 0) {
       element.replaceWith(...element.childNodes);
@@ -131,14 +149,16 @@ var CustomImportScript = (() => {
     const cells = [];
     items.forEach((item) => {
       const image = item.querySelector(
-        ".cmp-list__item-img img, .events-gridcmp__item-img img, .box-photo img, figure img, img"
+        ".cmp-list__item-img img, .events-gridcmp__item-img img, img.columnfeature-img, .box-photo img, figure img, img"
       );
       const titleLink = item.querySelector(
         "a.cmp-list__item-link, h4 a.events-title, .events-gridcmp__item-content h4 a, .cmp-list__item-content a.h-bar"
       );
       const heading = item.querySelector(
-        ".cmp-list__item-content h3, .events-gridcmp__item-content h4, h3, h4, h2"
+        ".cmp-list__item-content h3, .events-gridcmp__item-content h4, .colfeature-content h4, h3, h4, h2"
       );
+      const featureDesc = item.querySelector(".columnfeature-card-desc");
+      const featureCta = item.querySelector(".columnfeature-footer a, .columnfeature-card-footer a");
       const dateBlock = item.querySelector(".events-calendar");
       const locationBlock = item.querySelector(".events-location");
       const description = item.querySelector(".short-desc-gen, .events-desc, .cmp-list__item-content p, .events-gridcmp__item-content p, p");
@@ -158,7 +178,22 @@ var CustomImportScript = (() => {
       }
       if (dateBlock) textCell.appendChild(dateBlock);
       if (locationBlock) textCell.appendChild(locationBlock);
-      if (description) textCell.appendChild(description);
+      if (!titleLink && heading && featureDesc) {
+        const descP = document2.createElement("p");
+        descP.textContent = featureDesc.textContent.replace(/\s+/g, " ").trim();
+        textCell.appendChild(descP);
+        if (featureCta) {
+          const ctaP = document2.createElement("p");
+          featureCta.querySelectorAll("svg, span.icon, img").forEach((s) => s.remove());
+          const a = document2.createElement("a");
+          a.setAttribute("href", featureCta.getAttribute("href") || "");
+          a.textContent = featureCta.textContent.replace(/\s+/g, " ").trim();
+          ctaP.appendChild(a);
+          textCell.appendChild(ctaP);
+        }
+      } else if (description) {
+        textCell.appendChild(description);
+      }
       cells.push([imageCell, textCell]);
     });
     const block = WebImporter.Blocks.createBlock(document2, { name: "cards-tile", cells });
@@ -310,11 +345,12 @@ var CustomImportScript = (() => {
       },
       {
         name: "columns-feature",
-        instances: ["div.columnfeaturecontent.cardstyle"]
+        instances: ["div.columnlinklist"]
       },
       {
         name: "cards-tile",
         instances: [
+          "div.columnfeaturecontent.cardstyle",
           "div.generic-gridlist",
           "div.gridlist.list.horizontal.img-tile",
           "div.eventgridlist"
@@ -341,7 +377,7 @@ var CustomImportScript = (() => {
       {
         id: "section-3",
         name: "Study tools & Popular pages",
-        selector: "div.columnfeaturecontent.cardstyle",
+        selector: "div.columnlinklist",
         style: "grey",
         blocks: ["columns-feature"],
         defaultContent: []
@@ -349,7 +385,7 @@ var CustomImportScript = (() => {
       {
         id: "section-4",
         name: "Feedback / Census / Safety cards",
-        selector: "div.generic-gridlist",
+        selector: "div.columnfeaturecontent.cardstyle",
         style: null,
         blocks: ["cards-tile"],
         defaultContent: []

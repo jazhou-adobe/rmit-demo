@@ -30,11 +30,12 @@ const PAGE_TEMPLATE = {
     },
     {
       name: 'columns-feature',
-      instances: ['div.columnfeaturecontent.cardstyle'],
+      instances: ['div.columnlinklist'],
     },
     {
       name: 'cards-tile',
       instances: [
+        'div.columnfeaturecontent.cardstyle',
         'div.generic-gridlist',
         'div.gridlist.list.horizontal.img-tile',
         'div.eventgridlist',
@@ -61,7 +62,7 @@ const PAGE_TEMPLATE = {
     {
       id: 'section-3',
       name: 'Study tools & Popular pages',
-      selector: 'div.columnfeaturecontent.cardstyle',
+      selector: 'div.columnlinklist',
       style: 'grey',
       blocks: ['columns-feature'],
       defaultContent: [],
@@ -69,7 +70,7 @@ const PAGE_TEMPLATE = {
     {
       id: 'section-4',
       name: 'Feedback / Census / Safety cards',
-      selector: 'div.generic-gridlist',
+      selector: 'div.columnfeaturecontent.cardstyle',
       style: null,
       blocks: ['cards-tile'],
       defaultContent: [],
