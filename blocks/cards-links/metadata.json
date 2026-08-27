@@ -1,0 +1,37 @@
+{
+  "variantName": "cards-links",
+  "baseBlock": "cards",
+  "version": "1.0.0",
+  "created": "2026-08-27T00:00:00.000Z",
+  "sourceContext": {
+    "originUrl": "https://www.rmit.edu.au/students",
+    "originPage": "Current students landing page",
+    "blockPosition": "top"
+  },
+  "visualCharacteristics": {
+    "colorScheme": "light",
+    "density": "compact",
+    "purpose": "feature",
+    "imagePattern": "icon"
+  },
+  "contentPattern": {
+    "structure": "multi-column grid of icon + linked label quick links",
+    "buttonCount": 0,
+    "imageCount": 12
+  },
+  "reuseGuidance": {
+    "suitableFor": [
+      "quick-link / essentials grids with small icons and short labels",
+      "directory-style link collections"
+    ],
+    "notSuitableFor": [
+      "image-topped content cards with body copy (use cards-tile)",
+      "single-column narrative content"
+    ]
+  },
+  "usage": {
+    "pagesUsing": ["/students"],
+    "reuseCount": 1,
+    "lastUsed": "2026-08-27T00:00:00.000Z"
+  }
+}

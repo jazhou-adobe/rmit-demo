@@ -1,0 +1,100 @@
+/*
+ * hero-overlay — RMIT pageheader banner
+ * Source: div.pageheader on https://www.rmit.edu.au/students
+ * Full-bleed campus photo (1440x376, object-fit cover) with a translucent
+ * white panel (rgb(255 255 255 / 90%), 596px, 32px padding) overlaid on the
+ * left. Values extracted from source computed styles.
+ *
+ * Decorated DOM:
+ *   .hero-overlay.block
+ *     > div            (row 1 — image cell)  > div > p > picture > img
+ *     > div            (row 2 — text cell)   > div > h2 + p + p
+ */
+
+/* Full-width: escape the .section > div max-width:1200 / padding */
+.hero-overlay-container .hero-overlay-wrapper {
+  max-width: 100%;
+  padding: 0;
+}
+
+.hero-overlay {
+  position: relative;
+}
+
+/* --- image (row 1) --- */
+.hero-overlay > div:first-child {
+  line-height: 0;
+}
+
+.hero-overlay picture {
+  display: block;
+}
+
+.hero-overlay img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+/* --- text panel (row 2) --- */
+.hero-overlay > div:last-child > div {
+  background-color: rgb(255 255 255 / 90%);
+  padding: 24px 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.hero-overlay h2 {
+  margin: 0;
+  font-size: 32px;
+  font-weight: 500;
+  line-height: 1.2;
+  color: var(--rmit-navy);
+}
+
+.hero-overlay p {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.625;
+  color: var(--rmit-navy);
+}
+
+.hero-overlay h2 + p {
+  margin-top: 12px;
+}
+
+/* --- desktop: overlay the panel on the full-bleed image --- */
+@media (width >= 900px) {
+  .hero-overlay {
+    min-height: 376px;
+  }
+
+  .hero-overlay > div:first-child {
+    position: absolute;
+    inset: 0;
+  }
+
+  .hero-overlay picture,
+  .hero-overlay > div:first-child img {
+    height: 100%;
+  }
+
+  .hero-overlay > div:last-child {
+    position: relative;
+    max-width: 1200px;
+    height: 376px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    padding: 0 32px;
+  }
+
+  .hero-overlay > div:last-child > div {
+    width: 596px;
+    max-width: 100%;
+    min-height: 168px;
+    padding: 32px;
+  }
+}

@@ -1,0 +1,98 @@
+/* Block: columns-feature — feature cards (image + heading + body + CTA link).
+   Values extracted from rmit.edu.au/students computed styles.
+   Sits inside a .section.grey (grey background handled globally). */
+
+/* Row: cards stacked on mobile, side-by-side on desktop */
+.columns-feature > div {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* Card */
+.columns-feature .columns-feature-card {
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  border: 1px solid rgb(0 0 0 / 12.5%);
+  border-radius: 8px;
+  overflow: hidden; /* clips image to card's rounded top corners */
+}
+
+/* Image — full-bleed top, fixed height, cover crop */
+.columns-feature .columns-feature-image {
+  margin: 0;
+}
+
+.columns-feature .columns-feature-image img {
+  display: block;
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+/* Heading */
+.columns-feature .columns-feature-card h4 {
+  margin: 24px 0;
+  padding: 0 24px;
+  font-family: var(--heading-font-family);
+  font-size: 22px;
+  font-weight: 500;
+  line-height: 30px;
+  color: var(--rmit-navy);
+}
+
+/* Description body */
+.columns-feature .columns-feature-card-desc {
+  margin: 0 0 16px;
+  padding: 0 24px;
+  font-family: var(--body-font-family);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  color: #333;
+}
+
+/* Footer — pinned to card bottom with a top divider */
+.columns-feature .columns-feature-footer {
+  margin: 24px 0 0; /* margin-top auto pushes it down for equal-height cards */
+  margin-top: auto;
+  padding: 16px 24px;
+  border-top: 1px solid rgb(225 225 225);
+}
+
+/* CTA link */
+.columns-feature .columns-feature-footer a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--body-font-family);
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--rmit-navy);
+  text-decoration: none;
+}
+
+.columns-feature .columns-feature-footer a:hover {
+  color: var(--rmit-red);
+  text-decoration: underline;
+}
+
+/* Chevron icon */
+.columns-feature .columns-feature-footer a img {
+  width: 12px;
+  height: 12px;
+}
+
+/* Desktop: equal-width columns side by side */
+@media (width >= 900px) {
+  .columns-feature > div {
+    flex-direction: row;
+    align-items: stretch;
+  }
+
+  .columns-feature .columns-feature-card {
+    flex: 1;
+    min-width: 0;
+  }
+}

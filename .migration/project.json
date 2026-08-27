@@ -1,0 +1,15 @@
+{
+  "type": "xwalk",
+  "sites": {
+    "rmit-demo": {
+      "previewOrg": "jazhou-adobe",
+      "previewSite": "rmit-demo",
+      "contentHostUrl": "author-p116706-e1142141.adobeaemcloud.com",
+      "aemSitePath": "/content/rmit-demo",
+      "aemAssetsFolderPath": "/content/dam/rmit-demo",
+      "aemSiteName": "rmit-demo",
+      "aemSiteTitle": "RMIT Demo",
+      "libraryUrl": "https://main--sta-xwalk-boilerplate--aemysites.aem.page/tools/sidekick/library.json"
+    }
+  }
+}
