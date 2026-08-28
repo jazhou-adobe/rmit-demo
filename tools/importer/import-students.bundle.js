@@ -420,7 +420,7 @@ var CustomImportScript = (() => {
         id: "section-8",
         name: "Need help",
         selector: "div.experiencefragment",
-        style: null,
+        style: "need-help",
         blocks: [],
         defaultContent: ["div.experiencefragment"]
       },

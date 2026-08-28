@@ -306,3 +306,44 @@ main .section.dark h5,
 main .section.dark h6 {
   color: #fff;
 }
+
+/* "Need help?" support CTA — matches rmit.edu.au pre-footer band:
+   navy Inter heading, grey body copy, red Contact button, navy text link. */
+main .section.need-help {
+  margin: 0;
+  padding: 40px 0;
+}
+
+main .section.need-help h3 {
+  font-family: var(--body-font-family);
+  font-size: var(--heading-font-size-l);
+  font-weight: 500;
+  color: var(--rmit-navy);
+  margin: 0 0 12px;
+}
+
+main .section.need-help p {
+  font-size: var(--body-font-size-s);
+  color: #333;
+  margin: 0 0 12px;
+}
+
+/* first link = red Contact button; global a.button styling already applies,
+   but ensure it is not underlined and keeps brand red */
+main .section.need-help a.button:any-link {
+  background-color: var(--rmit-red);
+  border-color: var(--rmit-red);
+  color: #fff;
+  text-decoration: none;
+}
+
+/* second link ("Browse other support services") = plain navy text link */
+main .section.need-help p:last-of-type a:not(.button) {
+  color: var(--rmit-navy);
+  text-decoration: underline;
+}
+
+/* hide the decorative right-arrow icon that trails the Browse link */
+main .section.need-help p:last-of-type a picture {
+  display: none;
+}
