@@ -217,6 +217,10 @@ var CustomImportScript = (() => {
         // primary mega-nav dropdown link lists (outside top-nav)
         "div.footer.rmit-bs",
         // global site footer
+        "div.experiencefragment",
+        // "Need help?" support CTA — moved to footer fragment
+        "div.acknowledgementofcountry",
+        // Acknowledgement of Country — moved to footer fragment
         "iframe"
         // tracking / ad pixels
       ]);
