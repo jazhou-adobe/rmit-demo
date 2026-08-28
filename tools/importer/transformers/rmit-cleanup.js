@@ -16,12 +16,12 @@
  *                                    Navigation chrome now provided by the header block.
  *   - div.footer.rmit-bs (line 2396) global site footer (footer-cols, footer-legal, etc.)
  *   - iframe             (lines 2670, 2686) tracking / advertising pixels
- *   - div.experiencefragment         "Need help?" support CTA — pre-footer band on the
- *                                    source; migrated into the footer block fragment.
  *   - div.acknowledgementofcountry   Acknowledgement of Country — a sibling of the source
  *                                    <contentinfo> footer; migrated into the footer block.
  *
  * NOTE: div.pageheader is the hero block (authorable) and is NOT removed.
+ * NOTE: div.experiencefragment ("Need help?") is authorable page content and is
+ * kept in the page body (NOT moved to the footer).
  */
 
 const TransformHook = { beforeTransform: 'beforeTransform', afterTransform: 'afterTransform' };
@@ -36,7 +36,6 @@ export default function transform(hookName, element, payload) {
       'div.mobinav__wrapper',     // any other mobile-nav wrapper instances
       'div.primarynav',           // primary mega-nav dropdown link lists (outside top-nav)
       'div.footer.rmit-bs',       // global site footer
-      'div.experiencefragment',   // "Need help?" support CTA — moved to footer fragment
       'div.acknowledgementofcountry', // Acknowledgement of Country — moved to footer fragment
       'iframe',                   // tracking / ad pixels
     ]);

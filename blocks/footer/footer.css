@@ -1,6 +1,7 @@
 /* RMIT footer — navy background, white text. Top-to-bottom order matches source:
-   (1) Need help support CTA, (2) Acknowledgement of Country, (3) logo + quicklinks,
-   (4) five link columns, (5) legal + social bottom bar.
+   (1) Acknowledgement of Country, (2) logo + quicklinks, (3) five link columns,
+   (4) legal + social bottom bar.
+   Note: "Need help?" is authorable page content and lives in the page body, not here.
    Extracted from https://www.rmit.edu.au/students. */
 
 footer {
@@ -34,78 +35,24 @@ footer .footer ul {
   padding: 0;
 }
 
-/* Row 1: Need help? — centered support CTA */
+/* Row 1: Acknowledgement of Country */
 footer .footer > div:nth-child(1) {
   display: flex;
   flex-direction: column;
-  align-items: center;
   gap: 12px;
-  text-align: center;
   padding-bottom: 32px;
-  border-bottom: 1px solid rgb(255 255 255 / 20%);
-}
-
-footer .footer > div:nth-child(1) h3 {
-  margin: 0;
-  font-size: var(--heading-font-size-l);
-  font-weight: 500;
-  color: #fff;
-}
-
-/* EDS auto-decorates single-link paragraphs as a.button; neutralize that in the
-   footer so only the Contact CTA is a red button and everything else is a link. */
-footer .footer a.button,
-footer .footer .button-container .button {
-  margin: 0;
-  border: none;
-  border-radius: 0;
-  padding: 0;
-  background-color: transparent;
-  color: #fff;
-  font-size: inherit;
-  font-weight: inherit;
-  white-space: normal;
-  text-decoration: underline;
-}
-
-/* "Contact Student Connect" — the ONLY red button (first link paragraph after the intro) */
-footer .footer > div:nth-child(1) p:nth-of-type(2) a {
-  display: inline-block;
-  background-color: var(--rmit-red);
-  color: #fff;
-  padding: 12px 24px;
-  border-radius: 8px;
-  font-weight: 500;
-  text-decoration: none;
-}
-
-footer .footer > div:nth-child(1) p:nth-of-type(2) a:hover {
-  background-color: #c4121f;
-}
-
-/* stylelint-disable-next-line no-descending-specificity */
-footer .footer > div:nth-child(1) p:nth-of-type(3) a {
-  text-decoration: underline;
-}
-
-/* Row 2: Acknowledgement of Country */
-footer .footer > div:nth-child(2) {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  padding: 32px 0;
   line-height: 1.6;
   border-bottom: 1px solid rgb(255 255 255 / 20%);
 }
 
-footer .footer > div:nth-child(2) h4 {
+footer .footer > div:nth-child(1) h4 {
   margin: 0;
   font-size: var(--heading-font-size-m);
   font-weight: 500;
   color: #fff;
 }
 
-footer .footer > div:nth-child(2) img {
+footer .footer > div:nth-child(1) img {
   height: 24px;
   width: auto;
   margin-right: 8px;
@@ -113,8 +60,7 @@ footer .footer > div:nth-child(2) img {
 }
 
 /* the artwork image (last img) renders larger */
-/* stylelint-disable-next-line no-descending-specificity */
-footer .footer > div:nth-child(2) p:last-child img {
+footer .footer > div:nth-child(1) p:last-child img {
   height: auto;
   max-width: 320px;
   width: 100%;
@@ -123,12 +69,12 @@ footer .footer > div:nth-child(2) p:last-child img {
 }
 
 /* stylelint-disable-next-line no-descending-specificity */
-footer .footer > div:nth-child(2) a {
+footer .footer > div:nth-child(1) a {
   text-decoration: underline;
 }
 
-/* Row 3: logo + quicklinks */
-footer .footer > div:nth-child(3) {
+/* Row 2: logo + quicklinks */
+footer .footer > div:nth-child(2) {
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -137,27 +83,27 @@ footer .footer > div:nth-child(3) {
 }
 
 /* stylelint-disable-next-line no-descending-specificity */
-footer .footer > div:nth-child(3) img {
+footer .footer > div:nth-child(2) img {
   width: 150px;
   height: auto;
 }
 
-footer .footer > div:nth-child(3) ul {
+footer .footer > div:nth-child(2) ul {
   display: flex;
   flex-wrap: wrap;
   gap: 12px 24px;
   font-weight: 500;
 }
 
-/* Row 4: link columns */
-footer .footer > div:nth-child(4) {
+/* Row 3: link columns */
+footer .footer > div:nth-child(3) {
   display: grid;
   grid-template-columns: 1fr;
   gap: 28px;
   padding: 32px 0;
 }
 
-footer .footer > div:nth-child(4) h3 {
+footer .footer > div:nth-child(3) h3 {
   margin: 0 0 12px;
   font-size: var(--body-font-size-s);
   font-weight: 600;
@@ -165,20 +111,20 @@ footer .footer > div:nth-child(4) h3 {
 }
 
 /* stylelint-disable-next-line no-descending-specificity */
-footer .footer > div:nth-child(4) h3 a {
+footer .footer > div:nth-child(3) h3 a {
   color: #fff;
 }
 
-footer .footer > div:nth-child(4) li {
+footer .footer > div:nth-child(3) li {
   padding: 6px 0;
 }
 
 /* stylelint-disable-next-line no-descending-specificity */
-footer .footer > div:nth-child(4) li a {
+footer .footer > div:nth-child(3) li a {
   color: rgb(255 255 255 / 85%);
 }
 
-/* Row 5: legal + social */
+/* Row 4: legal + social */
 footer .footer > div:last-child {
   display: flex;
   flex-direction: column;
@@ -208,7 +154,7 @@ footer .footer > div:last-child ul a {
 }
 
 @media (width >= 600px) {
-  footer .footer > div:nth-child(4) {
+  footer .footer > div:nth-child(3) {
     grid-template-columns: repeat(3, 1fr);
   }
 }
@@ -219,7 +165,7 @@ footer .footer > div:last-child ul a {
   }
 
   /* Acknowledgement: text left, artwork right */
-  footer .footer > div:nth-child(2) {
+  footer .footer > div:nth-child(1) {
     display: grid;
     grid-template-columns: 1fr auto;
     grid-template-areas:
@@ -231,19 +177,19 @@ footer .footer > div:last-child ul a {
     align-items: start;
   }
 
-  footer .footer > div:nth-child(2) p:first-child { grid-area: flags; }
-  footer .footer > div:nth-child(2) h4 { grid-area: head; }
-  footer .footer > div:nth-child(2) p:nth-of-type(2) { grid-area: body; }
-  footer .footer > div:nth-child(2) p:last-child { grid-area: art; }
-  footer .footer > div:nth-child(2) a { grid-area: link; }
+  footer .footer > div:nth-child(1) p:first-child { grid-area: flags; }
+  footer .footer > div:nth-child(1) h4 { grid-area: head; }
+  footer .footer > div:nth-child(1) p:nth-of-type(2) { grid-area: body; }
+  footer .footer > div:nth-child(1) p:last-child { grid-area: art; }
+  footer .footer > div:nth-child(1) a { grid-area: link; }
 
-  footer .footer > div:nth-child(3) {
+  footer .footer > div:nth-child(2) {
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
   }
 
-  footer .footer > div:nth-child(4) {
+  footer .footer > div:nth-child(3) {
     grid-template-columns: repeat(5, 1fr);
     gap: 32px;
   }
