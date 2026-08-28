@@ -52,7 +52,23 @@ footer .footer > div:nth-child(1) h3 {
   color: #fff;
 }
 
-/* "Contact Student Connect" primary (red) button; second link is a plain text link */
+/* EDS auto-decorates single-link paragraphs as a.button; neutralize that in the
+   footer so only the Contact CTA is a red button and everything else is a link. */
+footer .footer a.button,
+footer .footer .button-container .button {
+  margin: 0;
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  background-color: transparent;
+  color: #fff;
+  font-size: inherit;
+  font-weight: inherit;
+  white-space: normal;
+  text-decoration: underline;
+}
+
+/* "Contact Student Connect" — the ONLY red button (first link paragraph after the intro) */
 footer .footer > div:nth-child(1) p:nth-of-type(2) a {
   display: inline-block;
   background-color: var(--rmit-red);
