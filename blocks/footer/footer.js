@@ -31,6 +31,25 @@ export default async function decorate(block) {
     brandAnchor.append(logo);
   }
 
+  // Acknowledgement of Country images: the fragment pipeline rewrites these
+  // <img src> to "about:error", so repoint them to the local /images assets,
+  // matched by alt text. Flags render inline-small; the artwork renders large.
+  const ackImages = [
+    ['aboriginal flag', '/images/flag-aboriginal.png', 'Aboriginal flag'],
+    ['torres strait', '/images/flag-torres-strait.png', 'Torres Strait Islander flag'],
+    ['sentient', '/images/acknowledgement-artwork.jpg', "'Sentient' by Hollie Johnson, Gunaikurnai and Monero Ngarigo"],
+  ];
+  footer.querySelectorAll('img[src="about:error"], img:not([src])').forEach((img) => {
+    const alt = (img.getAttribute('alt') || '').toLowerCase();
+    const match = ackImages.find(([needle]) => alt.includes(needle));
+    if (!match) return;
+    const [, src, altText] = match;
+    img.src = src;
+    img.alt = altText;
+    img.removeAttribute('width');
+    img.removeAttribute('height');
+  });
+
   // Render social links as icons (source: circular social buttons in the legal
   // bar). Matched by hostname so only the social row is affected.
   const socialMap = [
