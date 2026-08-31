@@ -317,11 +317,25 @@ function a11yLinks(main) {
 }
 
 /**
+ * Removes import artifacts that must never render as page content — e.g. the
+ * GTM <noscript> body tag that gets imported as a visible "GTM body script"
+ * link. No legitimate content links to a googletagmanager ns.html URL.
+ * @param {Element} main The main element
+ */
+function removeImportArtifacts(main) {
+  main.querySelectorAll('a[href*="googletagmanager.com/ns.html"]').forEach((a) => {
+    const p = a.closest('p');
+    (p && p.textContent.trim() === a.textContent.trim() ? p : a).remove();
+  });
+}
+
+/**
  * Decorates the main element.
  * @param {Element} main The main element
  */
 // eslint-disable-next-line import/prefer-default-export
 export function decorateMain(main) {
+  removeImportArtifacts(main);
   // hopefully forward compatible button decoration
   decorateButtons(main);
   decorateIcons(main);
