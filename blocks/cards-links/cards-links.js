@@ -34,5 +34,17 @@ export default function decorate(block) {
   });
 
   block.textContent = '';
+
+  // Source parity: the "Student essentials" heading sits INSIDE the white card
+  // (above the grid), not on the grey band. Pull the section's heading in as the
+  // card title so the red top rule / card / navy corner wrap heading + grid.
+  const section = block.closest('.section');
+  const dcw = section && section.querySelector(':scope > .default-content-wrapper');
+  const heading = dcw && dcw.querySelector('h1, h2, h3, h4, h5, h6');
+  if (heading) {
+    block.append(heading);
+    if (!dcw.querySelector('*')) dcw.remove();
+  }
+
   block.append(ul);
 }

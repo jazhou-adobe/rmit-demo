@@ -3,11 +3,35 @@
    Source: white drop-shadow card containing a multi-column grid of items,
    each = small SVG icon + linked label. Values from source computed styles. */
 
-/* White drop-shadow card (source .iconlistsvg__wrapper) */
+/* White drop-shadow card (source .iconlistsvg__wrapper): red top rule, navy
+   bottom-right corner, heading pulled inside (see cards-links.js). */
 .cards-links {
+  position: relative;
+  overflow: hidden;
   background-color: #fff;
   box-shadow: rgb(0 0 0 / 8%) 0 4px 32px 0;
+  border-top: 4px solid var(--rmit-red);
   padding: 32px 24px 40px;
+}
+
+/* heading now lives inside the card, above the grid */
+.cards-links > h1,
+.cards-links > h2,
+.cards-links > h3,
+.cards-links > h4 {
+  margin: 0 0 8px;
+  color: var(--rmit-navy);
+}
+
+/* navy corner triangle (source .iconlistsvg bottom-right accent) */
+.cards-links::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  border-style: solid;
+  border-width: 0 0 48px 48px;
+  border-color: transparent transparent var(--rmit-navy) transparent;
 }
 
 /* Grid of items (source .iconlistsvg__content--row: flex-wrap, 3 columns) */
@@ -84,4 +108,10 @@
   .cards-links > ul > li {
     padding: 20px 16px 0;
   }
+}
+
+/* Pull the "Student essentials" card up close to the hero (source keeps a small
+   ~52px gap; the default grey-section top padding left it floating ~150px down). */
+main > .section.grey.cards-links-container {
+  padding-top: 16px;
 }

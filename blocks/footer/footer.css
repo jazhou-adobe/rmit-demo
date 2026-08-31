@@ -153,6 +153,18 @@ footer .footer > div:last-child ul a {
   text-decoration: none;
 }
 
+/* social links rendered as icons (see footer.js) */
+footer .footer .footer-social-link {
+  display: inline-flex;
+  line-height: 0;
+}
+
+footer .footer li a.footer-social-link img {
+  display: block;
+  width: 32px;
+  height: 32px;
+}
+
 @media (width >= 600px) {
   footer .footer > div:nth-child(3) {
     grid-template-columns: repeat(3, 1fr);
@@ -193,4 +205,10 @@ footer .footer > div:last-child ul a {
     grid-template-columns: repeat(5, 1fr);
     gap: 32px;
   }
+}
+
+/* injected brand logo fallback (see footer.js) */
+footer .footer .footer-brand-logo {
+  width: 150px;
+  height: auto;
 }

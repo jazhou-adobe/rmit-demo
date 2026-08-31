@@ -2,6 +2,12 @@
    white local student-nav bar. Extracted from https://www.rmit.edu.au/students
    (global bar background rgb(7,7,88) = RMIT navy). */
 
+/* two-row RMIT header (navy global bar + white local nav) is taller than the
+   boilerplate 64px single bar; let it size to content so it never overlaps main */
+header {
+  height: auto;
+}
+
 header .nav-wrapper {
   background-color: var(--rmit-navy);
   width: 100%;
@@ -122,15 +128,45 @@ header .nav-brand {
   grid-area: brand;
   display: flex;
   align-items: center;
+  gap: 16px;
 }
 
 header nav .nav-brand p {
+  margin: 0;
   line-height: 0;
+  display: flex;
+}
+
+/* red brand box holding the reversed (white) RMIT logo */
+header .nav-brand .nav-logo {
+  display: flex;
+  align-items: center;
+  background-color: var(--rmit-red);
+  padding: 14px 18px;
 }
 
 header nav .nav-brand img {
-  width: 130px;
+  width: 96px;
   height: auto;
+}
+
+/* region selector label ("RMIT Australia v") */
+header .nav-brand .nav-region {
+  display: none;
+  align-items: center;
+  gap: 8px;
+  color: #fff;
+  font-size: var(--body-font-size-s);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+header .nav-brand .nav-region-chevron {
+  width: 8px;
+  height: 8px;
+  border-right: 2px solid currentcolor;
+  border-bottom: 2px solid currentcolor;
+  transform: translateY(-2px) rotate(45deg);
 }
 
 /* sections — holds two uls: [0] RMIT-wide bar, [1] local student nav */
@@ -174,27 +210,35 @@ header nav .nav-sections .default-content-wrapper > ul + ul {
   }
 
   header nav {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    grid-template-areas:
+      "brand utility tools"
+      "localnav localnav localnav";
     align-items: center;
     gap: 0;
     padding: 0;
     max-width: none;
   }
 
-  /* Row 1: navy global bar — brand + RMIT-wide links + search */
+  /* Row 1 left: brand — red logo box + region label. Indent the logo to the
+     centred 1264px content edge while row 2 stays full-bleed white. */
   header nav .nav-brand {
-    order: 1;
-    padding: 12px 32px;
+    grid-area: brand;
+    align-self: stretch;
+    padding-left: max(24px, calc(50vw - 632px));
   }
 
-  header nav .nav-tools {
-    order: 2;
-    padding: 12px 32px;
+  header nav .nav-brand .nav-region {
+    display: flex;
   }
 
-  header nav .nav-sections {
+  header nav .nav-brand .nav-logo {
+    height: 100%;
+    box-sizing: border-box;
+  }
+
+  header nav[aria-expanded] .nav-sections {
     display: contents;
     visibility: visible;
   }
@@ -203,27 +247,50 @@ header nav .nav-sections .default-content-wrapper > ul + ul {
     display: contents;
   }
 
-  /* RMIT-wide bar (first ul) — small links, right of logo on the navy row */
+  /* Row 1 right: RMIT-wide links */
   header nav .nav-sections .default-content-wrapper > ul:first-child {
-    order: 1;
+    grid-area: utility;
+    place-self: stretch end;
     display: flex;
-    gap: 24px;
-    margin-left: auto;
-    padding: 0 8px;
-    align-items: center;
+    gap: 20px;
+    padding: 0 12px;
+    align-items: stretch;
   }
 
   header nav .nav-sections .default-content-wrapper > ul:first-child > li {
+    display: flex;
+    align-items: center;
     padding: 0;
     font-size: var(--body-font-size-xs);
   }
 
-  /* Local student nav (second ul) — full-width white bar below */
-  header nav .nav-sections .default-content-wrapper > ul:last-child {
-    order: 3;
-    flex-basis: 100%;
+  header nav .nav-sections .default-content-wrapper > ul:first-child > li a {
     display: flex;
-    gap: 32px;
+    align-items: center;
+    color: #fff;
+  }
+
+  /* active RMIT-wide link — white pill (source shows "Students") */
+  header nav .nav-sections .default-content-wrapper > ul:first-child > li a[aria-current='page'] {
+    padding: 0 16px;
+    background-color: #fff;
+    color: var(--rmit-navy);
+    font-weight: 700;
+  }
+
+  /* Row 1 far right: search icon */
+  header nav .nav-tools {
+    grid-area: tools;
+    place-self: center end;
+    padding-right: max(24px, calc(50vw - 632px));
+  }
+
+  /* Row 2: white local nav bar, centred */
+  header nav .nav-sections .default-content-wrapper > ul:last-child {
+    grid-area: localnav;
+    display: flex;
+    justify-content: center;
+    gap: 40px;
     margin: 0;
     padding: 0 32px;
     background-color: #fff;
@@ -251,8 +318,19 @@ header nav .nav-tools {
 }
 
 header nav .nav-tools a {
+  display: flex;
+  align-items: center;
   color: #fff;
   font-size: var(--body-font-size-xs);
+}
+
+/* search rendered as a white magnifying-glass icon (see header.js) */
+header nav .nav-tools .nav-search-icon {
+  display: block;
+  width: 22px;
+  height: 22px;
+  background-color: #fff;
+  mask: url('/icons/search.svg') center / contain no-repeat;
 }
 
 /* breadcrumbs (unused for now) */

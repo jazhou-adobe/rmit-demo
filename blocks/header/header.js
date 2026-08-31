@@ -198,6 +198,26 @@ export default async function decorate(block) {
     brandLink.closest('.button-container').className = '';
   }
 
+  // Brand: the /nav brand link is authored empty. Render the reversed (white)
+  // RMIT logo inside the red brand box (see header.css) and add the region label.
+  const brandAnchor = navBrand?.querySelector('a');
+  if (brandAnchor && !brandAnchor.querySelector('img, svg') && !brandAnchor.textContent.trim()) {
+    brandAnchor.setAttribute('aria-label', 'RMIT University');
+    brandAnchor.classList.add('nav-logo');
+    const logo = document.createElement('img');
+    logo.src = '/icons/rmit-logo-white.svg';
+    logo.alt = 'RMIT University';
+    logo.width = 96;
+    logo.height = 33;
+    brandAnchor.append(logo);
+  }
+  if (navBrand && !navBrand.querySelector('.nav-region')) {
+    const region = document.createElement('span');
+    region.className = 'nav-region';
+    region.innerHTML = 'RMIT Australia <span class="nav-region-chevron"></span>';
+    navBrand.append(region);
+  }
+
   const navSections = nav.querySelector('.nav-sections');
   if (navSections) {
     navSections.querySelectorAll(':scope .default-content-wrapper > ul > li').forEach((navSection) => {
@@ -214,13 +234,28 @@ export default async function decorate(block) {
       buttonContainer.classList.remove('button-container');
       buttonContainer.querySelector('.button').classList.remove('button');
     });
+
+    // Highlight the active RMIT-wide link (source shows "Students" as a pill).
+    const here = window.location.pathname.replace(/\/$/, '');
+    navSections.querySelectorAll(':scope .default-content-wrapper > ul:first-child a').forEach((a) => {
+      const href = new URL(a.href, window.location).pathname.replace(/\/$/, '');
+      if (href && (here === href || here.startsWith(`${href}/`))) a.setAttribute('aria-current', 'page');
+    });
   }
 
   const navTools = nav.querySelector('.nav-tools');
   if (navTools) {
     const search = navTools.querySelector('a[href*="search"]');
-    if (search && search.textContent === '') {
+    if (search) {
       search.setAttribute('aria-label', 'Search');
+      search.classList.remove('button', 'primary', 'secondary');
+      const bc = search.closest('.button-container');
+      if (bc) bc.classList.remove('button-container');
+      search.classList.add('nav-search');
+      search.textContent = '';
+      const icon = document.createElement('span');
+      icon.className = 'nav-search-icon';
+      search.append(icon);
     }
   }
 
