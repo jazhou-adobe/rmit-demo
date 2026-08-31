@@ -159,6 +159,7 @@ footer .footer .footer-social-link {
   line-height: 0;
 }
 
+/* stylelint-disable-next-line no-descending-specificity */
 footer .footer li a.footer-social-link img {
   display: block;
   width: 32px;
