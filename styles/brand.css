@@ -1,6 +1,6 @@
 /*
  * brand.css — RMIT design tokens extracted from https://www.rmit.edu.au/students
- * Fonts (Roboto / Roboto Condensed) are defined in fonts.css + styles.css.
+ * Fonts: body = Arial (system), headings = Inter (self-hosted, see fonts.css + styles.css).
  */
 :root {
   /* colors */
