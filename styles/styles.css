@@ -304,36 +304,33 @@ main .section.dark h6 {
   color: #fff;
 }
 
-/* "Need help?" section (section-metadata style=need-help): centred heading +
-   body, a red primary button, and a plain navy link with a red chevron.
-   Matches https://www.rmit.edu.au/students. */
-main .section.need-help {
+/* "Need help?" section: centred heading + body, a red primary button, and a
+   plain navy link with a red chevron. The section carries no style class, so it
+   is matched by its heading id. Matches https://www.rmit.edu.au/students. */
+main .section:has(> .default-content-wrapper > #need-help) {
   text-align: center;
 }
 
-main .section.need-help h1,
-main .section.need-help h2,
-main .section.need-help h3,
-main .section.need-help h4 {
+main .section:has(> .default-content-wrapper > #need-help) :is(h1, h2, h3, h4) {
   margin: 0 0 16px;
   color: var(--rmit-navy);
   font-size: var(--heading-size-l);
   font-weight: 500;
 }
 
-main .section.need-help p {
+main .section:has(> .default-content-wrapper > #need-help) p {
   margin: 0 auto;
   max-width: 760px;
   color: #333;
   font-size: var(--body-font-size-s);
 }
 
-main .section.need-help p.button-container {
+main .section:has(> .default-content-wrapper > #need-help) p.button-container {
   margin: 24px auto 0;
 }
 
 /* the trailing link ("Browse other support services") is a plain navy link */
-main .section.need-help p.button-container:last-of-type a.button:any-link {
+main .section:has(> .default-content-wrapper > #need-help) p.button-container:last-of-type a.button:any-link {
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -349,7 +346,7 @@ main .section.need-help p.button-container:last-of-type a.button:any-link {
   overflow: visible;
 }
 
-main .section.need-help p.button-container:last-of-type a.button::after {
+main .section:has(> .default-content-wrapper > #need-help) p.button-container:last-of-type a.button::after {
   content: "";
   flex: 0 0 auto;
   width: 14px;
@@ -358,8 +355,8 @@ main .section.need-help p.button-container:last-of-type a.button::after {
   mask: url("/icons/chevron-right.svg") center / contain no-repeat;
 }
 
-main .section.need-help p.button-container:last-of-type a.button:hover,
-main .section.need-help p.button-container:last-of-type a.button:focus {
+main .section:has(> .default-content-wrapper > #need-help) p.button-container:last-of-type a.button:hover,
+main .section:has(> .default-content-wrapper > #need-help) p.button-container:last-of-type a.button:focus {
   background-color: transparent;
   border: 0;
   color: var(--rmit-red);
