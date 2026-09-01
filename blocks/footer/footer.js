@@ -40,7 +40,33 @@ export default async function decorate(block) {
     const inner = document.createElement('div');
     inner.className = 'footer-acknowledgement-inner';
     const ac = contentOf(ack);
-    while (ac.firstChild) inner.append(ac.firstChild);
+    const kids = [...ac.children];
+    // classify: two small flag images, the Sentient artwork, and the text block
+    const flags = kids.filter((k) => {
+      const img = k.querySelector('img');
+      return img && /flag/i.test(img.alt);
+    });
+    const media = kids.find((k) => k.querySelector('picture, img') && !flags.includes(k));
+    const textEls = kids.filter((k) => k !== media && !flags.includes(k));
+
+    const textCol = document.createElement('div');
+    textCol.className = 'footer-ack-text';
+    if (flags.length) {
+      const flagRow = document.createElement('div');
+      flagRow.className = 'footer-ack-flags';
+      flags.forEach((f) => flagRow.append(f));
+      textCol.append(flagRow);
+    }
+    textEls.forEach((t) => textCol.append(t));
+    inner.append(textCol);
+
+    if (media) {
+      const mediaCol = document.createElement('div');
+      mediaCol.className = 'footer-ack-media';
+      mediaCol.append(media);
+      inner.append(mediaCol);
+    }
+
     band.append(inner);
     block.append(band);
   }
