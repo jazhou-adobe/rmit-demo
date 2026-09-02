@@ -1,0 +1,15 @@
+{
+  "status": "success",
+  "url": "https://www.rmit.edu.au/students/student-life",
+  "path": "students/student-life",
+  "timestamp": "2026-09-02T02:19:57.666Z",
+  "title": "Student life - RMIT University",
+  "template": "student-life",
+  "blocks": [
+    "hero-overlay",
+    "cards-tile",
+    "cards-tile",
+    "cards-links",
+    "columns-promo"
+  ]
+}

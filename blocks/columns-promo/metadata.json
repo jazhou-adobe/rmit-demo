@@ -1,0 +1,38 @@
+{
+  "variantName": "columns-promo",
+  "baseBlock": "columns",
+  "version": "1.0.0",
+  "created": "2026-09-02T00:00:00.000Z",
+  "sourceContext": {
+    "originUrl": "https://www.rmit.edu.au/students/student-life",
+    "originPage": "Student life page",
+    "blockPosition": "middle"
+  },
+  "visualCharacteristics": {
+    "colorScheme": "accent",
+    "density": "spacious",
+    "purpose": "promo",
+    "imagePattern": "large"
+  },
+  "contentPattern": {
+    "structure": "single image beside a coloured content panel with heading + description + one CTA button",
+    "buttonCount": 1,
+    "imageCount": 1
+  },
+  "reuseGuidance": {
+    "suitableFor": [
+      "single side-by-side promotional / call-to-action banners (image next to a coloured content panel)",
+      "image + heading + description + single button layouts"
+    ],
+    "notSuitableFor": [
+      "two symmetric feature panels each with an image + link list (use columns-feature)",
+      "repeating card grids (use cards-tile)",
+      "icon + short label quick-link grids (use cards-links)"
+    ]
+  },
+  "usage": {
+    "pagesUsing": ["/students/student-life"],
+    "reuseCount": 1,
+    "lastUsed": "2026-09-02T00:00:00.000Z"
+  }
+}

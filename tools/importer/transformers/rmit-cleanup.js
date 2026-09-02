@@ -37,7 +37,15 @@ export default function transform(hookName, element, payload) {
       'div.primarynav',           // primary mega-nav dropdown link lists (outside top-nav)
       'div.footer.rmit-bs',       // global site footer
       'div.acknowledgementofcountry', // Acknowledgement of Country — moved to footer fragment
+      'div.breadcrumb',           // breadcrumb navigation bar (sub-pages, e.g. /students/student-life)
+      'noscript',                 // GTM <noscript> iframe ("GTM body script") + other no-JS fallbacks
       'iframe',                   // tracking / ad pixels
     ]);
+
+    // Redundant page-title heading: sub-pages (e.g. /students/student-life) emit a
+    // bare <h1> as a direct child of <body>, above the hero. The visible title is
+    // the hero overlay, so this duplicate <h1> would render twice — remove it.
+    const bodyH1 = element.querySelector(':scope > h1');
+    if (bodyH1) bodyH1.remove();
   }
 }

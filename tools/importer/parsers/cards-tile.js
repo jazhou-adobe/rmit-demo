@@ -20,11 +20,15 @@
  *      with `img.columnfeature-img`, `h4` heading, `.columnfeature-card-desc` description,
  *      and a footer CTA link (`.columnfeature-footer a`). Not a linked heading — the CTA
  *      is a separate "Find out more" style link kept as the card's link.
+ *   D) Icon-feature image tiles (https://www.rmit.edu.au/students/student-life, Student
+ *      media — div.iconfeature:has(div.image-card)): each `.icon-feature` column has a
+ *      `figure img` photo, an `h3` title, a `p.desc-color` description and a separate CTA
+ *      anchor (`a.iconfeature-cta`). Like layout C: plain heading + description + CTA.
  */
 export default function parse(element, { document }) {
   // Union of card-item selectors across all instance layouts.
   const items = Array.from(
-    element.querySelectorAll('.cmp-list__item, .events-gridcmp__item, .columnfeature-card'),
+    element.querySelectorAll('.cmp-list__item, .events-gridcmp__item, .columnfeature-card, .icon-feature'),
   );
 
   // Empty-block guard
@@ -52,6 +56,8 @@ export default function parse(element, { document }) {
     // Feature-card (layout C) description + footer CTA link.
     const featureDesc = item.querySelector('.columnfeature-card-desc');
     const featureCta = item.querySelector('.columnfeature-footer a, .columnfeature-card-footer a');
+    // Icon-feature tile (layout D): separate "... website" CTA anchor.
+    const iconFeatureCta = item.querySelector('a.iconfeature-cta');
     // Events layout: date + location blocks (each includes an icon + text).
     const dateBlock = item.querySelector('.events-calendar');
     const locationBlock = item.querySelector('.events-location');
@@ -97,6 +103,16 @@ export default function parse(element, { document }) {
       }
     } else if (description) {
       textCell.appendChild(description);
+      // Icon-feature tile (layout D): append the trailing "... website" CTA link.
+      if (iconFeatureCta) {
+        const ctaP = document.createElement('p');
+        iconFeatureCta.querySelectorAll('svg, span.icon, img').forEach((s) => s.remove());
+        const a = document.createElement('a');
+        a.setAttribute('href', iconFeatureCta.getAttribute('href') || '');
+        a.textContent = iconFeatureCta.textContent.replace(/\s+/g, ' ').trim();
+        ctaP.appendChild(a);
+        textCell.appendChild(ctaP);
+      }
     }
 
     cells.push([imageCell, textCell]);
