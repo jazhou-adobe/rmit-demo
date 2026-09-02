@@ -117,3 +117,87 @@
   color: var(--rmit-red);
   text-decoration: underline;
 }
+
+/* ---- Feature card variant (see cards-tile.js) --------------------------
+   source: rmit.edu.au/students columnfeature cards — white bordered cards with
+   an 8px radius, full-bleed 16:9 image, navy heading, navy body, and a footer
+   CTA separated by a divider with a red chevron. */
+.cards-tile.cards-tile-cards > ul {
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+}
+
+.cards-tile.cards-tile-cards > ul > li {
+  overflow: hidden;
+  background-color: #fff;
+  border: 1px solid rgb(0 0 0 / 12.5%);
+  border-radius: 8px;
+}
+
+.cards-tile.cards-tile-cards > ul > li img {
+  aspect-ratio: 16 / 9;
+}
+
+.cards-tile.cards-tile-cards .cards-tile-card-body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  margin: 0;
+  padding: 20px 24px 0;
+}
+
+.cards-tile.cards-tile-cards .cards-tile-card-body :is(h1, h2, h3, h4, h5, h6) {
+  margin: 0 0 12px;
+  color: var(--rmit-navy);
+  font-family: var(--heading-font-family);
+  font-size: 22px;
+  font-weight: 500;
+  line-height: 30px;
+}
+
+.cards-tile.cards-tile-cards .cards-tile-card-body > p {
+  margin: 0 0 12px;
+  color: var(--rmit-navy);
+  font-size: 16px;
+  line-height: 24px;
+}
+
+/* CTA footer — pinned to the card bottom, above a divider, with a red chevron */
+.cards-tile.cards-tile-cards .cards-tile-card-cta {
+  margin: 16px 0 0;
+  margin-top: auto;
+  padding: 16px 0 20px;
+  border-top: 1px solid #e1e1e1;
+}
+
+.cards-tile.cards-tile-cards .cards-tile-card-cta a.button:any-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background-color: transparent;
+  color: var(--rmit-navy);
+  font-family: var(--body-font-family);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.4;
+  text-decoration: none;
+}
+
+.cards-tile.cards-tile-cards .cards-tile-card-cta a.button::after {
+  content: "";
+  width: 14px;
+  height: 14px;
+  background-color: var(--rmit-red);
+  mask: url("/icons/chevron-right.svg") center / contain no-repeat;
+}
+
+.cards-tile.cards-tile-cards .cards-tile-card-cta a.button:hover,
+.cards-tile.cards-tile-cards .cards-tile-card-cta a.button:focus {
+  color: var(--rmit-red);
+  text-decoration: underline;
+}

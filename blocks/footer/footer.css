@@ -1,8 +1,6 @@
-/* RMIT footer — navy background, white text. Top-to-bottom order matches source:
-   (1) Acknowledgement of Country, (2) logo + quicklinks, (3) five link columns,
-   (4) legal + social bottom bar.
-   Note: "Need help?" is authorable page content and lives in the page body, not here.
-   Extracted from https://www.rmit.edu.au/students. */
+/* RMIT footer — navy background, white text: a columns row (brand + five link
+   columns) and a legal + social bottom bar, with the Acknowledgement of Country
+   as a light band above. Extracted from https://www.rmit.edu.au/students. */
 
 footer {
   background-color: var(--rmit-navy);
@@ -10,206 +8,252 @@ footer {
   font-size: var(--body-font-size-xs);
 }
 
-footer .footer {
+footer a:any-link {
+  color: #fff;
+  text-decoration: none;
+}
+
+footer a:hover {
+  text-decoration: underline;
+}
+
+footer p {
+  margin: 0;
+}
+
+footer ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* ---- Acknowledgement of Country — light full-bleed band ---------------- */
+footer .footer-acknowledgement {
+  background-color: var(--rmit-grey);
+  color: var(--rmit-navy);
+}
+
+footer .footer-acknowledgement a:any-link {
+  color: var(--rmit-navy);
+  text-decoration: none;
+}
+
+footer .footer-acknowledgement a:hover {
+  text-decoration: underline;
+}
+
+footer .footer-acknowledgement-inner {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 32px;
+  align-items: center;
   max-width: 1264px;
   margin: auto;
   padding: 40px 24px;
 }
 
-footer .footer a:any-link {
-  color: #fff;
+footer .footer-ack-flags {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+footer .footer-ack-flags p {
+  margin: 0;
+}
+
+footer .footer-ack-flags img {
+  width: auto;
+  height: 34px;
+}
+
+footer .footer-ack-text h4 {
+  margin: 0 0 16px;
+  color: var(--rmit-navy);
+  font-family: var(--heading-font-family);
+  font-size: 22px;
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+footer .footer-ack-text p {
+  margin: 0 0 16px;
+  color: #333;
+  font-size: var(--body-font-size-xs);
+  line-height: 1.5;
+}
+
+/* "Learn more" — navy link with a red chevron (auto-decorated as a button) */
+footer .footer-ack-text a.button:any-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background-color: transparent;
+  color: var(--rmit-navy);
+  font-family: var(--heading-font-family);
+  font-size: var(--body-font-size-s);
+  font-weight: 500;
+  line-height: 1.4;
+  text-align: left;
   text-decoration: none;
 }
 
-footer .footer a:hover {
+footer .footer-ack-text a.button::after {
+  content: "";
+  flex: 0 0 auto;
+  align-self: start;
+  width: 16px;
+  height: 16px;
+  margin-top: 2px;
+  background-color: var(--rmit-red);
+  mask: url("/icons/chevron-right.svg") center / contain no-repeat;
+}
+
+footer .footer-ack-text a.button:hover {
+  color: var(--rmit-red);
   text-decoration: underline;
 }
 
-footer .footer p {
-  margin: 0;
+footer .footer-ack-media img {
+  display: block;
+  width: 100%;
+  height: auto;
 }
 
-footer .footer ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
+/* ---- Navy content ------------------------------------------------------ */
+footer .footer-inner {
+  max-width: 1264px;
+  margin: auto;
+  padding: 40px 24px;
 }
 
-/* Row 1: Acknowledgement of Country */
-footer .footer > div:nth-child(1) {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+/* Columns row: brand + one column per link group */
+footer .footer-columns {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 28px;
   padding-bottom: 32px;
-  line-height: 1.6;
-  border-bottom: 1px solid rgb(255 255 255 / 20%);
 }
 
-footer .footer > div:nth-child(1) h4 {
-  margin: 0;
-  font-size: var(--heading-font-size-m);
-  font-weight: 500;
+footer .footer-col h3 {
+  margin: 0 0 16px;
+  color: #fff;
+  font-size: var(--body-font-size-s);
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+footer .footer-col h3 a:any-link {
   color: #fff;
 }
 
-footer .footer > div:nth-child(1) img {
-  height: 24px;
-  width: auto;
-  margin-right: 8px;
-  display: inline-block;
+footer .footer-col li {
+  padding: 6px 0;
 }
 
-/* the artwork image (last img) renders larger */
-footer .footer > div:nth-child(1) p:last-child img {
-  height: auto;
-  max-width: 320px;
-  width: 100%;
-  border-radius: 8px;
-  margin: 0;
+footer .footer-col li a:any-link {
+  color: rgb(255 255 255 / 90%);
+  line-height: 1.4;
 }
 
-/* stylelint-disable-next-line no-descending-specificity */
-footer .footer > div:nth-child(1) a {
-  text-decoration: underline;
-}
-
-/* Row 2: logo + quicklinks */
-footer .footer > div:nth-child(2) {
+/* Brand column: logo + quick links */
+footer .footer-brand {
   display: flex;
   flex-direction: column;
   gap: 20px;
-  padding: 32px 0;
-  border-bottom: 1px solid rgb(255 255 255 / 20%);
 }
 
-/* stylelint-disable-next-line no-descending-specificity */
-footer .footer > div:nth-child(2) img {
+footer .footer-brand-logo {
   width: 150px;
   height: auto;
 }
 
-footer .footer > div:nth-child(2) ul {
+footer .footer-brand ul {
   display: flex;
-  flex-wrap: wrap;
-  gap: 12px 24px;
+  flex-direction: column;
+  gap: 12px;
+}
+
+footer .footer-brand li a:any-link {
+  color: #fff;
   font-weight: 500;
 }
 
-/* Row 3: link columns */
-footer .footer > div:nth-child(3) {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 28px;
-  padding: 32px 0;
-}
-
-footer .footer > div:nth-child(3) h3 {
-  margin: 0 0 12px;
-  font-size: var(--body-font-size-s);
-  font-weight: 600;
-  color: #fff;
-}
-
-/* stylelint-disable-next-line no-descending-specificity */
-footer .footer > div:nth-child(3) h3 a {
-  color: #fff;
-}
-
-footer .footer > div:nth-child(3) li {
-  padding: 6px 0;
-}
-
-/* stylelint-disable-next-line no-descending-specificity */
-footer .footer > div:nth-child(3) li a {
-  color: rgb(255 255 255 / 85%);
-}
-
-/* Row 4: legal + social */
-footer .footer > div:last-child {
+/* Legal + social bottom bar */
+footer .footer-legal {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 24px;
   padding-top: 24px;
   border-top: 1px solid rgb(255 255 255 / 20%);
   line-height: 1.6;
-  color: rgb(255 255 255 / 80%);
+  color: rgb(255 255 255 / 90%);
 }
 
-/* stylelint-disable-next-line no-descending-specificity */
-footer .footer > div:last-child a {
-  color: rgb(255 255 255 / 80%);
+footer .footer-legal p a:any-link {
+  color: #fff;
   text-decoration: underline;
 }
 
-footer .footer > div:last-child ul {
+footer .footer-legal ul {
   display: flex;
   flex-wrap: wrap;
   gap: 16px;
-  font-weight: 500;
-}
-
-/* stylelint-disable-next-line no-descending-specificity */
-footer .footer > div:last-child ul a {
-  text-decoration: none;
 }
 
 /* social links rendered as icons (see footer.js) */
-footer .footer .footer-social-link {
+footer .footer-social-link {
   display: inline-flex;
   line-height: 0;
 }
 
-/* stylelint-disable-next-line no-descending-specificity */
-footer .footer li a.footer-social-link img {
+footer .footer-social-link img {
   display: block;
   width: 32px;
   height: 32px;
 }
 
 @media (width >= 600px) {
-  footer .footer > div:nth-child(3) {
+  footer .footer-columns {
     grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-@media (width >= 900px) {
-  footer .footer {
-    padding: 48px 32px;
-  }
-
-  /* Acknowledgement: text left, artwork right */
-  footer .footer > div:nth-child(1) {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    grid-template-areas:
-      'flags art'
-      'head art'
-      'body art'
-      'link art';
-    column-gap: 32px;
-    align-items: start;
-  }
-
-  footer .footer > div:nth-child(1) p:first-child { grid-area: flags; }
-  footer .footer > div:nth-child(1) h4 { grid-area: head; }
-  footer .footer > div:nth-child(1) p:nth-of-type(2) { grid-area: body; }
-  footer .footer > div:nth-child(1) p:last-child { grid-area: art; }
-  footer .footer > div:nth-child(1) a { grid-area: link; }
-
-  footer .footer > div:nth-child(2) {
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  footer .footer > div:nth-child(3) {
-    grid-template-columns: repeat(5, 1fr);
     gap: 32px;
   }
 }
 
-/* injected brand logo fallback (see footer.js) */
-footer .footer .footer-brand-logo {
-  width: 150px;
-  height: auto;
+@media (width >= 900px) {
+  footer .footer-acknowledgement-inner,
+  footer .footer-inner {
+    padding: 48px 32px;
+  }
+
+  footer .footer-acknowledgement-inner {
+    grid-template-columns: 1.15fr 1fr;
+    gap: 64px;
+  }
+
+  footer .footer-columns {
+    grid-template-columns: 1.4fr repeat(5, 1fr);
+    gap: 32px;
+  }
+
+  footer .footer-legal {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+
+  footer .footer-legal p {
+    flex: 1;
+    max-width: 62%;
+  }
+
+  footer .footer-legal ul {
+    flex-shrink: 0;
+    gap: 12px;
+  }
 }
