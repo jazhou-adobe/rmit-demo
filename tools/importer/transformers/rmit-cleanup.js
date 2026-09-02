@@ -16,10 +16,12 @@
  *                                    Navigation chrome now provided by the header block.
  *   - div.footer.rmit-bs (line 2396) global site footer (footer-cols, footer-legal, etc.)
  *   - iframe             (lines 2670, 2686) tracking / advertising pixels
+ *   - div.acknowledgementofcountry   Acknowledgement of Country — a sibling of the source
+ *                                    <contentinfo> footer; migrated into the footer block.
  *
- * NOTE: div.experiencefragment (section-8 "Need help") and
- * div.acknowledgementofcountry (section-9) are authorable template sections and
- * are intentionally NOT removed. div.pageheader is the hero block (authorable).
+ * NOTE: div.pageheader is the hero block (authorable) and is NOT removed.
+ * NOTE: div.experiencefragment ("Need help?") is authorable page content and is
+ * kept in the page body (NOT moved to the footer).
  */
 
 const TransformHook = { beforeTransform: 'beforeTransform', afterTransform: 'afterTransform' };
@@ -34,7 +36,16 @@ export default function transform(hookName, element, payload) {
       'div.mobinav__wrapper',     // any other mobile-nav wrapper instances
       'div.primarynav',           // primary mega-nav dropdown link lists (outside top-nav)
       'div.footer.rmit-bs',       // global site footer
+      'div.acknowledgementofcountry', // Acknowledgement of Country — moved to footer fragment
+      'div.breadcrumb',           // breadcrumb navigation bar (sub-pages, e.g. /students/student-life)
+      'noscript',                 // GTM <noscript> iframe ("GTM body script") + other no-JS fallbacks
       'iframe',                   // tracking / ad pixels
     ]);
+
+    // Redundant page-title heading: sub-pages (e.g. /students/student-life) emit a
+    // bare <h1> as a direct child of <body>, above the hero. The visible title is
+    // the hero overlay, so this duplicate <h1> would render twice — remove it.
+    const bodyH1 = element.querySelector(':scope > h1');
+    if (bodyH1) bodyH1.remove();
   }
 }

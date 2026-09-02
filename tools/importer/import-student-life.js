@@ -3,21 +3,21 @@
 
 // PARSER IMPORTS
 import heroOverlayParser from './parsers/hero-overlay.js';
-import cardsLinksParser from './parsers/cards-links.js';
-import columnsFeatureParser from './parsers/columns-feature.js';
 import cardsTileParser from './parsers/cards-tile.js';
+import cardsLinksParser from './parsers/cards-links.js';
+import columnsPromoParser from './parsers/columns-promo.js';
 
 // TRANSFORMER IMPORTS
 import cleanupTransformer from './transformers/rmit-cleanup.js';
 import dmImagesTransformer from './transformers/rmit-dm-images.js';
 import sectionsTransformer from './transformers/rmit-sections.js';
 
-// PAGE TEMPLATE CONFIGURATION - Embedded from page-templates.json
+// PAGE TEMPLATE CONFIGURATION - Embedded from page-templates.json (template: student-life)
 const PAGE_TEMPLATE = {
-  name: 'students',
-  description: 'Current students landing page: hero, icon-link grid, two-column feature panels, and multiple image-tile card rows (feedback, resources, events, news).',
+  name: 'student-life',
+  description: 'Student life landing page: hero, intro, a topics tile grid, a social-media icon row, a navy promo banner, a student-media tile row, and Need help. Shares block variants with the students template.',
   urls: [
-    'https://www.rmit.edu.au/students',
+    'https://www.rmit.edu.au/students/student-life',
   ],
   blocks: [
     {
@@ -25,95 +25,77 @@ const PAGE_TEMPLATE = {
       instances: ['div.pageheader'],
     },
     {
-      name: 'cards-links',
-      instances: ['div.iconlistsvg.bg-white'],
-    },
-    {
-      name: 'columns-feature',
-      instances: ['div.columnlinklist'],
-    },
-    {
       name: 'cards-tile',
       instances: [
-        'div.columnfeaturecontent.cardstyle',
         'div.generic-gridlist',
-        'div.gridlist.list.horizontal.img-tile',
-        'div.eventgridlist',
+        'div.iconfeature:has(div.image-card)',
       ],
+    },
+    {
+      name: 'cards-links',
+      instances: ['div.iconfeature:has(div.icon-card)'],
+    },
+    {
+      name: 'columns-promo',
+      instances: ['div.standardbanners'],
     },
   ],
   sections: [
     {
       id: 'section-1',
       name: 'Hero',
-      selector: 'body > div.root:nth-of-type(1) > section > div:nth-of-type(2)',
+      selector: 'div.pageheader',
       style: null,
       blocks: ['hero-overlay'],
       defaultContent: [],
     },
     {
       id: 'section-2',
-      name: 'Student essentials',
-      selector: 'div.iconlistsvg.bg-white',
+      name: 'Intro',
+      selector: 'div.intro',
+      style: null,
+      blocks: [],
+      defaultContent: ['div.intro'],
+    },
+    {
+      id: 'section-3',
+      name: 'Student life topics grid',
+      selector: 'div.generic-gridlist',
+      style: null,
+      blocks: ['cards-tile'],
+      defaultContent: [],
+    },
+    {
+      id: 'section-4',
+      name: 'Follow us on social media',
+      selector: 'div.sectionarea.nopixel',
       style: 'grey',
       blocks: ['cards-links'],
       defaultContent: ['div.text-component'],
     },
     {
-      id: 'section-3',
-      name: 'Study tools & Popular pages',
-      selector: 'div.columnlinklist',
-      style: 'grey',
-      blocks: ['columns-feature'],
-      defaultContent: [],
-    },
-    {
-      id: 'section-4',
-      name: 'Feedback / Census / Safety cards',
-      selector: 'div.columnfeaturecontent.cardstyle',
-      style: null,
-      blocks: ['cards-tile'],
-      defaultContent: [],
-    },
-    {
       id: 'section-5',
-      name: 'Explore resources for current students',
-      selector: 'div.section-title',
-      style: 'grey',
-      blocks: ['cards-tile'],
-      defaultContent: ['div.section-title'],
+      name: 'Explore campus facilities promo banner',
+      selector: 'div.standardbanners',
+      style: null,
+      blocks: ['columns-promo'],
+      defaultContent: [],
     },
     {
       id: 'section-6',
-      name: 'Events and activities',
-      selector: 'div.eventgridlist',
-      style: null,
+      name: 'Student media',
+      selector: 'div.sectionarea.bground-grey:not(.nopixel)',
+      style: 'grey',
       blocks: ['cards-tile'],
-      defaultContent: ['div.section-title', 'div.rmitctabutton'],
+      defaultContent: ['div.text-component'],
     },
     {
       id: 'section-7',
-      name: 'Student news',
-      selector: 'div.gridlist.list.horizontal.img-tile',
-      style: 'grey',
-      blocks: ['cards-tile'],
-      defaultContent: ['div.section-title', 'div.rmitctabutton'],
-    },
-    {
-      id: 'section-8',
       name: 'Need help',
       selector: 'div.experiencefragment',
       style: 'need-help',
       blocks: [],
       defaultContent: ['div.experiencefragment'],
-    },
-    {
-      id: 'section-9',
-      name: 'Acknowledgement of Country',
-      selector: 'div.acknowledgementofcountry',
-      style: null,
-      blocks: [],
-      defaultContent: ['div.acknowledgementofcountry'],
     },
   ],
 };
@@ -128,9 +110,9 @@ const transformers = [
 // PARSER REGISTRY
 const parsers = {
   'hero-overlay': heroOverlayParser,
-  'cards-links': cardsLinksParser,
-  'columns-feature': columnsFeatureParser,
   'cards-tile': cardsTileParser,
+  'cards-links': cardsLinksParser,
+  'columns-promo': columnsPromoParser,
 };
 
 /**

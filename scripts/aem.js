@@ -313,12 +313,18 @@ function createOptimizedPicture(
   const { pathname } = url;
   const ext = pathname.substring(pathname.lastIndexOf('.') + 1);
 
+  // Cross-origin images (e.g. content imported with absolute source URLs that
+  // haven't yet been ingested into the DAM) must keep their origin — the EDS
+  // optimizer only rewrites same-origin paths, so a bare pathname would 404 on
+  // this host. Same-origin/DAM paths stay relative so the optimizer applies.
+  const base = url.origin === window.location.origin ? pathname : `${url.origin}${pathname}`;
+
   // webp
   breakpoints.forEach((br) => {
     const source = document.createElement('source');
     if (br.media) source.setAttribute('media', br.media);
     source.setAttribute('type', 'image/webp');
-    source.setAttribute('srcset', `${pathname}?width=${br.width}&format=webply&optimize=medium`);
+    source.setAttribute('srcset', `${base}?width=${br.width}&format=webply&optimize=medium`);
     picture.appendChild(source);
   });
 
@@ -327,14 +333,14 @@ function createOptimizedPicture(
     if (i < breakpoints.length - 1) {
       const source = document.createElement('source');
       if (br.media) source.setAttribute('media', br.media);
-      source.setAttribute('srcset', `${pathname}?width=${br.width}&format=${ext}&optimize=medium`);
+      source.setAttribute('srcset', `${base}?width=${br.width}&format=${ext}&optimize=medium`);
       picture.appendChild(source);
     } else {
       const img = document.createElement('img');
       img.setAttribute('loading', eager ? 'eager' : 'lazy');
       img.setAttribute('alt', alt);
       picture.appendChild(img);
-      img.setAttribute('src', `${pathname}?width=${br.width}&format=${ext}&optimize=medium`);
+      img.setAttribute('src', `${base}?width=${br.width}&format=${ext}&optimize=medium`);
     }
   });
 

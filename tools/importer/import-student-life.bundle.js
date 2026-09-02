@@ -35,10 +35,10 @@ var CustomImportScript = (() => {
   };
   var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
-  // tools/importer/import-students.js
-  var import_students_exports = {};
-  __export(import_students_exports, {
-    default: () => import_students_default
+  // tools/importer/import-student-life.js
+  var import_student_life_exports = {};
+  __export(import_student_life_exports, {
+    default: () => import_student_life_default
   });
 
   // tools/importer/parsers/hero-overlay.js
@@ -66,81 +66,10 @@ var CustomImportScript = (() => {
     element.replaceWith(block);
   }
 
-  // tools/importer/parsers/cards-links.js
-  function parse2(element, { document: document2 }) {
-    const headingSource = element.querySelector("h1, h2, h3, h4, h5, h6");
-    const heading = headingSource ? headingSource.cloneNode(true) : null;
-    const sections = Array.from(element.querySelectorAll(".iconlistsvg__section"));
-    if (sections.length === 0) {
-      element.replaceWith(...element.childNodes);
-      return;
-    }
-    const cells = [];
-    sections.forEach((section) => {
-      const icon = section.querySelector(".iconlistsvg__section--svg svg, .iconlistsvg__section--svg img, svg, img");
-      const link = section.querySelector(".iconlistsvg__section--text a, a");
-      const imageCell = document2.createDocumentFragment();
-      imageCell.appendChild(document2.createComment(" field:image "));
-      if (icon) imageCell.appendChild(icon);
-      const textCell = document2.createDocumentFragment();
-      textCell.appendChild(document2.createComment(" field:text "));
-      if (link) textCell.appendChild(link);
-      cells.push([imageCell, textCell]);
-    });
-    const block = WebImporter.Blocks.createBlock(document2, { name: "cards-links", cells });
-    if (heading) {
-      element.replaceWith(heading, block);
-    } else {
-      element.replaceWith(block);
-    }
-  }
-
-  // tools/importer/parsers/columns-feature.js
-  function buildColumn(scope, document2) {
-    const wrapper = scope.querySelector(".columnlinklist-wrapper") || scope;
-    const cellContent = [];
-    const image = wrapper.querySelector(".columnlinklist-image img, img");
-    const heading = wrapper.querySelector(".columnlinklist-body h4, h4, h3, h2");
-    if (image) cellContent.push(image);
-    if (heading) cellContent.push(heading);
-    const links = Array.from(wrapper.querySelectorAll("ul.columnlinklist-links > li > a, .columnlinklist-links li a"));
-    if (links.length) {
-      const ul = document2.createElement("ul");
-      links.forEach((a) => {
-        a.querySelectorAll("svg, .columnlinklist-chevron, span").forEach((s) => s.remove());
-        const li = document2.createElement("li");
-        const link = document2.createElement("a");
-        link.setAttribute("href", a.getAttribute("href") || "");
-        link.textContent = a.textContent.replace(/\s+/g, " ").trim();
-        li.appendChild(link);
-        ul.appendChild(li);
-      });
-      cellContent.push(ul);
-    }
-    return cellContent;
-  }
-  function parse3(element, { document: document2 }) {
-    const columns = [element];
-    let sib = element.nextElementSibling;
-    while (sib && sib.classList && sib.classList.contains("columnlinklist")) {
-      columns.push(sib);
-      sib = sib.nextElementSibling;
-    }
-    const row = columns.map((col) => buildColumn(col, document2));
-    if (row.every((c) => c.length === 0)) {
-      element.replaceWith(...element.childNodes);
-      return;
-    }
-    const cells = [row];
-    const block = WebImporter.Blocks.createBlock(document2, { name: "columns-feature", cells });
-    columns.slice(1).forEach((col) => col.remove());
-    element.replaceWith(block);
-  }
-
   // tools/importer/parsers/cards-tile.js
-  function parse4(element, { document: document2 }) {
+  function parse2(element, { document: document2 }) {
     const items = Array.from(
-      element.querySelectorAll(".cmp-list__item, .events-gridcmp__item, .columnfeature-card")
+      element.querySelectorAll(".cmp-list__item, .events-gridcmp__item, .columnfeature-card, .icon-feature")
     );
     if (items.length === 0) {
       element.replaceWith(...element.childNodes);
@@ -159,6 +88,7 @@ var CustomImportScript = (() => {
       );
       const featureDesc = item.querySelector(".columnfeature-card-desc");
       const featureCta = item.querySelector(".columnfeature-footer a, .columnfeature-card-footer a");
+      const iconFeatureCta = item.querySelector("a.iconfeature-cta");
       const dateBlock = item.querySelector(".events-calendar");
       const locationBlock = item.querySelector(".events-location");
       const description = item.querySelector(".short-desc-gen, .events-desc, .cmp-list__item-content p, .events-gridcmp__item-content p, p");
@@ -193,10 +123,103 @@ var CustomImportScript = (() => {
         }
       } else if (description) {
         textCell.appendChild(description);
+        if (iconFeatureCta) {
+          const ctaP = document2.createElement("p");
+          iconFeatureCta.querySelectorAll("svg, span.icon, img").forEach((s) => s.remove());
+          const a = document2.createElement("a");
+          a.setAttribute("href", iconFeatureCta.getAttribute("href") || "");
+          a.textContent = iconFeatureCta.textContent.replace(/\s+/g, " ").trim();
+          ctaP.appendChild(a);
+          textCell.appendChild(ctaP);
+        }
       }
       cells.push([imageCell, textCell]);
     });
     const block = WebImporter.Blocks.createBlock(document2, { name: "cards-tile", cells });
+    element.replaceWith(block);
+  }
+
+  // tools/importer/parsers/cards-links.js
+  function parse3(element, { document: document2 }) {
+    const headingSource = element.querySelector(":scope > h1, :scope > h2, :scope > h3, :scope > h4, :scope > h5, :scope > h6");
+    const heading = headingSource ? headingSource.cloneNode(true) : null;
+    const isIconFeature = element.classList.contains("iconfeature") || !!element.querySelector(".icon-card");
+    const sections = isIconFeature ? Array.from(element.querySelectorAll(".icon-feature")) : Array.from(element.querySelectorAll(".iconlistsvg__section"));
+    if (sections.length === 0) {
+      element.replaceWith(...element.childNodes);
+      return;
+    }
+    const cells = [];
+    sections.forEach((section) => {
+      const icon = section.querySelector(
+        ".iconlistsvg__section--svg svg, .iconlistsvg__section--svg img, figure img, svg, img"
+      );
+      const link = section.querySelector(".iconlistsvg__section--text a, a.iconfeature-cta, a");
+      const imageCell = document2.createDocumentFragment();
+      imageCell.appendChild(document2.createComment(" field:image "));
+      if (icon) imageCell.appendChild(icon);
+      const textCell = document2.createDocumentFragment();
+      textCell.appendChild(document2.createComment(" field:text "));
+      if (link) {
+        if (isIconFeature) {
+          const title = section.querySelector("h3, h4, h2");
+          const a = document2.createElement("a");
+          a.setAttribute("href", link.getAttribute("href") || "");
+          const label = (title ? title.textContent : link.textContent).replace(/\s+/g, " ").trim();
+          a.textContent = label;
+          textCell.appendChild(a);
+        } else {
+          textCell.appendChild(link);
+        }
+      }
+      cells.push([imageCell, textCell]);
+    });
+    const block = WebImporter.Blocks.createBlock(document2, { name: "cards-links", cells });
+    if (heading) {
+      element.replaceWith(heading, block);
+    } else {
+      element.replaceWith(block);
+    }
+  }
+
+  // tools/importer/parsers/columns-promo.js
+  function parse4(element, { document: document2 }) {
+    const image = element.querySelector(".stdbanner_imagebox img, img");
+    const content = element.querySelector(".stdbanner_contentbox .verticalcentercontent, .stdbanner_contentbox");
+    if (!image && !content) {
+      element.replaceWith(...element.childNodes);
+      return;
+    }
+    const imageCol = [];
+    if (image) imageCol.push(image);
+    const contentCol = [];
+    if (content) {
+      const heading = content.querySelector(".stdbanner_heading, h1, h2, h3, h4");
+      if (heading) {
+        const h = document2.createElement(/^h[1-6]$/i.test(heading.tagName) ? heading.tagName.toLowerCase() : "h3");
+        h.textContent = heading.textContent.replace(/\s+/g, " ").trim();
+        contentCol.push(h);
+      }
+      const desc = content.querySelector(".stdbanner_description");
+      if (desc) {
+        desc.querySelectorAll("p").forEach((p) => {
+          const np = document2.createElement("p");
+          np.textContent = p.textContent.replace(/\s+/g, " ").trim();
+          if (np.textContent) contentCol.push(np);
+        });
+      }
+      const btn = content.querySelector('.btn_Wrap_Secondary_stdban a, [class*="btn_Wrap"] a, a');
+      if (btn) {
+        const p = document2.createElement("p");
+        const a = document2.createElement("a");
+        a.setAttribute("href", btn.getAttribute("href") || "");
+        a.textContent = btn.textContent.replace(/\s+/g, " ").trim();
+        p.appendChild(a);
+        contentCol.push(p);
+      }
+    }
+    const cells = [[imageCol, contentCol]];
+    const block = WebImporter.Blocks.createBlock(document2, { name: "columns-promo", cells });
     element.replaceWith(block);
   }
 
@@ -219,9 +242,15 @@ var CustomImportScript = (() => {
         // global site footer
         "div.acknowledgementofcountry",
         // Acknowledgement of Country — moved to footer fragment
+        "div.breadcrumb",
+        // breadcrumb navigation bar (sub-pages, e.g. /students/student-life)
+        "noscript",
+        // GTM <noscript> iframe ("GTM body script") + other no-JS fallbacks
         "iframe"
         // tracking / ad pixels
       ]);
+      const bodyH1 = element.querySelector(":scope > h1");
+      if (bodyH1) bodyH1.remove();
     }
   }
 
@@ -329,12 +358,12 @@ var CustomImportScript = (() => {
     }
   }
 
-  // tools/importer/import-students.js
+  // tools/importer/import-student-life.js
   var PAGE_TEMPLATE = {
-    name: "students",
-    description: "Current students landing page: hero, icon-link grid, two-column feature panels, and multiple image-tile card rows (feedback, resources, events, news).",
+    name: "student-life",
+    description: "Student life landing page: hero, intro, a topics tile grid, a social-media icon row, a navy promo banner, a student-media tile row, and Need help. Shares block variants with the students template.",
     urls: [
-      "https://www.rmit.edu.au/students"
+      "https://www.rmit.edu.au/students/student-life"
     ],
     blocks: [
       {
@@ -342,95 +371,77 @@ var CustomImportScript = (() => {
         instances: ["div.pageheader"]
       },
       {
-        name: "cards-links",
-        instances: ["div.iconlistsvg.bg-white"]
-      },
-      {
-        name: "columns-feature",
-        instances: ["div.columnlinklist"]
-      },
-      {
         name: "cards-tile",
         instances: [
-          "div.columnfeaturecontent.cardstyle",
           "div.generic-gridlist",
-          "div.gridlist.list.horizontal.img-tile",
-          "div.eventgridlist"
+          "div.iconfeature:has(div.image-card)"
         ]
+      },
+      {
+        name: "cards-links",
+        instances: ["div.iconfeature:has(div.icon-card)"]
+      },
+      {
+        name: "columns-promo",
+        instances: ["div.standardbanners"]
       }
     ],
     sections: [
       {
         id: "section-1",
         name: "Hero",
-        selector: "body > div.root:nth-of-type(1) > section > div:nth-of-type(2)",
+        selector: "div.pageheader",
         style: null,
         blocks: ["hero-overlay"],
         defaultContent: []
       },
       {
         id: "section-2",
-        name: "Student essentials",
-        selector: "div.iconlistsvg.bg-white",
+        name: "Intro",
+        selector: "div.intro",
+        style: null,
+        blocks: [],
+        defaultContent: ["div.intro"]
+      },
+      {
+        id: "section-3",
+        name: "Student life topics grid",
+        selector: "div.generic-gridlist",
+        style: null,
+        blocks: ["cards-tile"],
+        defaultContent: []
+      },
+      {
+        id: "section-4",
+        name: "Follow us on social media",
+        selector: "div.sectionarea.nopixel",
         style: "grey",
         blocks: ["cards-links"],
         defaultContent: ["div.text-component"]
       },
       {
-        id: "section-3",
-        name: "Study tools & Popular pages",
-        selector: "div.columnlinklist",
-        style: "grey",
-        blocks: ["columns-feature"],
-        defaultContent: []
-      },
-      {
-        id: "section-4",
-        name: "Feedback / Census / Safety cards",
-        selector: "div.columnfeaturecontent.cardstyle",
-        style: null,
-        blocks: ["cards-tile"],
-        defaultContent: []
-      },
-      {
         id: "section-5",
-        name: "Explore resources for current students",
-        selector: "div.section-title",
-        style: "grey",
-        blocks: ["cards-tile"],
-        defaultContent: ["div.section-title"]
+        name: "Explore campus facilities promo banner",
+        selector: "div.standardbanners",
+        style: null,
+        blocks: ["columns-promo"],
+        defaultContent: []
       },
       {
         id: "section-6",
-        name: "Events and activities",
-        selector: "div.eventgridlist",
-        style: null,
+        name: "Student media",
+        selector: "div.sectionarea.bground-grey:not(.nopixel)",
+        style: "grey",
         blocks: ["cards-tile"],
-        defaultContent: ["div.section-title", "div.rmitctabutton"]
+        defaultContent: ["div.text-component"]
       },
       {
         id: "section-7",
-        name: "Student news",
-        selector: "div.gridlist.list.horizontal.img-tile",
-        style: "grey",
-        blocks: ["cards-tile"],
-        defaultContent: ["div.section-title", "div.rmitctabutton"]
-      },
-      {
-        id: "section-8",
         name: "Need help",
         selector: "div.experiencefragment",
         style: "need-help",
         blocks: [],
         defaultContent: ["div.experiencefragment"]
-      },
-      {
-        id: "section-9",
-        name: "Acknowledgement of Country",
-        selector: "div.acknowledgementofcountry",
-        style: null,
-        blocks: [],
-        defaultContent: ["div.acknowledgementofcountry"]
       }
     ]
   };
@@ -441,9 +452,9 @@ var CustomImportScript = (() => {
   ];
   var parsers = {
     "hero-overlay": parse,
-    "cards-links": parse2,
-    "columns-feature": parse3,
-    "cards-tile": parse4
+    "cards-tile": parse2,
+    "cards-links": parse3,
+    "columns-promo": parse4
   };
   function executeTransformers(hookName, element, payload) {
     const enhancedPayload = __spreadProps(__spreadValues({}, payload), {
@@ -478,7 +489,7 @@ var CustomImportScript = (() => {
     console.log(`Found ${pageBlocks.length} block instances on page`);
     return pageBlocks;
   }
-  var import_students_default = {
+  var import_student_life_default = {
     transform: (payload) => {
       const { document: document2, url, params } = payload;
       const main = document2.body;
@@ -516,5 +527,5 @@ var CustomImportScript = (() => {
       }];
     }
   };
-  return __toCommonJS(import_students_exports);
+  return __toCommonJS(import_student_life_exports);
 })();
